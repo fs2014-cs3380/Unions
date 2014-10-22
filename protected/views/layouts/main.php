@@ -32,7 +32,15 @@
 </head>
 
 <body>
-
+<header id="header">
+<div class="container">
+    <div class="row">
+        <div class ="pull-left col-xs-6">
+<?php echo CHtml::image(Yii::app()->baseUrl.'/images/banner_logo.jpg', 'Student Center', array('class' => 'img-responsive')); ?>
+        </div>
+    </div>
+</div>
+</header>
 <?php $this->renderPartial('//layouts/nav/_standard', array()); ?>
 
 <div class="container-fluid">

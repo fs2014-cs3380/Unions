@@ -225,3 +225,13 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+header {
+    position: relative;
+    width: 100%;
+    font-size: 24px;
+    line-height: 48px;
+    height: 90px;
+    background: black;
+    text-align: left;
+}
