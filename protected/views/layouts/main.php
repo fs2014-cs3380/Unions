@@ -26,6 +26,8 @@
 
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/unions.css"/>
+
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -46,6 +48,9 @@
 <div class="container-fluid">
     <!-- mainmenu -->
     <?php echo $content; ?>
+
+</div>
+<div class="container">
     <!-- footer -->
     <div id="footer">
         <p>
@@ -59,7 +64,6 @@
         </p>
     </div>
 </div>
-
 
 </body>
 </html>
