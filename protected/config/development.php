@@ -17,7 +17,7 @@ return array(
         ),
 
         'db'=>array(
-            'connectionString' => 'mysql:host=argo.col.missouri.edu;dbname=unions',
+            'connectionString' => 'mysql:host=127.0.0.1;dbname=unions',
             'emulatePrepare' => true,
             'username' => 'unions',
             'password' => 'iVIOwk*ivx',
