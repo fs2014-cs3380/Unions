@@ -1,3 +1,4 @@
+<hr>
 <?php
 /* @var $this SiteController */
 
