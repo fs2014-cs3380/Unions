@@ -43,7 +43,7 @@
     </div>
 </div>
 </header>
-<?php $this->renderPartial('//layouts/nav/_standard', array()); ?>
+<?php $this->renderPartial('//layouts/nav/_standard'); ?>
 
 <div class="container-fluid">
     <!-- mainmenu -->
