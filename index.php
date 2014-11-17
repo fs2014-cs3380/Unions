@@ -3,7 +3,8 @@ defined('YII_INCLUDE_PATH') or define('YII_INCLUDE_PATH', $_SERVER['YII_INCLUDE_
 defined('APPLICATION_ENV') or define('APPLICATION_ENV', $_SERVER['APPLICATION_ENV']);
 
 // change the following paths if necessary
-$yii=YII_INCLUDE_PATH;
+//$yii=YII_INCLUDE_PATH;
+$yii='/Applications/XAMPP/xamppfiles/yii/framework/yiic.php';
 $isDev = APPLICATION_ENV == "development" ? true : false;
 $configDir=dirname(__FILE__).'/protected/config/';
 $configFile = $isDev ? 'development.php' : 'production.php';
