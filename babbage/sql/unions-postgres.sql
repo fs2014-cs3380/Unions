@@ -64,9 +64,9 @@ CREATE TABLE building (
   name           VARCHAR(60)        NOT NULL,
 /*coordinate*/
   address        VARCHAR(100)       NOT NULL,
-  open_hours     INTEGER            NOT NULL,
-  close_hours    INTEGER            NOT NULL,
-  create_time    TIMESTAMP,
+  open_time      TIMESTAMP          NOT NULL,
+  close_time     TIME               NOT NULL,
+  create_time    TIME,
   create_user_id INTEGER,
   update_time    TIMESTAMP,
   update_user_id INTEGER
@@ -87,7 +87,7 @@ CREATE TABLE event_space (
   name           VARCHAR(45) NOT NULL,
   floor_id       INTEGER     NOT NULL REFERENCES floor,
   capactiy       INTEGER     NOT NULL,
-  reserved       BOOLEAN DEFAULT FALSE,
+  /*reserved       BOOLEAN DEFAULT FALSE -- This should be checked by start and end time and not stored in the database */
   image_path     VARCHAR(100),
   create_time    TIMESTAMP,
   create_user_id INTEGER,
@@ -110,7 +110,7 @@ CREATE TABLE feature (
   feature_id     SERIAL      NOT NULL,
   name           VARCHAR(45) NOT NULL,
   url            VARCHAR(150),
-  building_id    INTEGER REFERENCES building,
+  event_space_id INTEGER , /* NULL is allowed so no foreign key */
   create_time    TIMESTAMP,
   create_user_id INTEGER,
   update_time    TIMESTAMP,
