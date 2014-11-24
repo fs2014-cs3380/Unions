@@ -72,7 +72,7 @@ table, tr, td, th {
     transition-duration: 1s;
 }
 #logo {
-	background: url("/unions/images/banner_logo_std.jpg");
+	background: url("../images/banner_logo_std.jpg");
 	background-repeat: no-repeat;
 	width: 500px;
 	height: 85px;
@@ -91,7 +91,7 @@ table, tr, td, th {
     transition-duration: 1s;
 }
 #small_logo {
-	background: #000 url("/unions/images/MU-logo-RGB-stroke.png");
+	background: #000 url("../images/MU-logo-RGB-stroke.png");
 	background-repeat: no-repeat;
 	background-size: 112px 122px;
 	background-position: -20px -20px;
@@ -116,7 +116,7 @@ table, tr, td, th {
 .tag {
 	margin-left: 4px;
 	padding: 2px;
-	background: gainsboro;
+	/*background: gainsboro;*/
 }
 
 

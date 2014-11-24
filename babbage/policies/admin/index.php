@@ -4,12 +4,10 @@ $mainDir = "/Users/pcpopper/Unions/babbage/";
 
 require $mainDir . "/includes/header.php";
 
-if (isset($_GET['policy'])) {
-	require "policies_get.php";
-} else if (isset($_GET['tag'])) {
-	require "policies_tag.php";
+if (isset($_GET['type']) && isset($_GET['action'])) {
+	require "admin_forms.php";
 } else {
-	require "policies_main.php";
+	require "admin_main.php";
 }
 
 require $mainDir . "/includes/footer.php";
