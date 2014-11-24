@@ -4,9 +4,10 @@ ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(-1);
 
+// DEFINE("MAINDIR", "/~cs3380f14grp18/");
+// $mainDir = "/students/groups/cs3380f14grp18/public_html/";
 DEFINE("MAINDIR", "/unions/");
-$mainDir = "/students/groups/cs3380f14grp18/public_html/";
-//$mainDir = "/Users/pcpopper/Unions/babbage/";
+$mainDir = "/Users/pcpopper/Unions/babbage/";
 
 require $mainDir . '/secure/database.php';
 
