@@ -1,19 +1,4 @@
--- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
--- -----------------------------------------------------
--- Schema unions
--- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `unions` ;
-
--- -----------------------------------------------------
--- Schema unions
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `unions` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `unions` ;
 
 -- -----------------------------------------------------
 -- Table `unions`.`item_status`

@@ -7,6 +7,7 @@ return array(
             'ipFilters'=>array('*'),
             'generatorPaths'=>array(
                 'booster.gii',
+                'application.gii'
             ),
         ),
     ),

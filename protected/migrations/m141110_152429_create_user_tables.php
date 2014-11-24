@@ -1,6 +1,6 @@
 <?php
 
-class m141106_014357_create_policies_tables extends CDbMigration
+class m141110_152429_create_user_tables extends CDbMigration
 {
 	public function up()
 	{
@@ -8,7 +8,7 @@ class m141106_014357_create_policies_tables extends CDbMigration
 
 	public function down()
 	{
-		echo "m141106_014357_create_policies_tables does not support migration down.\n";
+		echo "m141110_152429_create_user_tables does not support migration down.\n";
 		return false;
 	}
 
