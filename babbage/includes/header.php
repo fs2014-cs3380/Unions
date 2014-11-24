@@ -5,7 +5,8 @@ ini_set('display_startup_errors',1);
 error_reporting(-1);
 
 DEFINE("MAINDIR", "/unions/");
-$mainDir = "/Users/pcpopper/Unions/babbage/";
+$mainDir = "/students/groups/cs3380f14grp18/public_html/";
+//$mainDir = "/Users/pcpopper/Unions/babbage/";
 
 require $mainDir . '/secure/database.php';
 
@@ -55,27 +56,9 @@ function customNotice($e) {
 		</div>
 		<div id="body">
 			<div id="content">
-				<nav>
-					<ul class="topnav">
-						<li><a href="<?php echo MAINDIR ?>">Home</a></li>
-						<li>
-							<a href="<?php echo MAINDIR ?>">Tutorials</a>
-							<ul class="subnav">
-								<li><a href="<?php echo MAINDIR ?>">Sub Nav Link</a></li>
-								<li><a href="<?php echo MAINDIR ?>">Sub Nav Link</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="<?php echo MAINDIR ?>">Resources</a>
-							<ul class="subnav">
-								<li><a href="<?php echo MAINDIR ?>">Sub Nav Link</a></li>
-								<li><a href="<?php echo MAINDIR ?>">Sub Nav Link</a></li>
-							</ul>
-						</li>
-						<li><a href="<?php echo MAINDIR ?>policies/">Policies</a></li>
-					</ul>
-				</nav>
 <?php
+require "menu_bar.php";
+
 $dbconn = pg_connect(CONNSTRING);
 if (!$dbconn) {
 	customError('Cannot connect.');
