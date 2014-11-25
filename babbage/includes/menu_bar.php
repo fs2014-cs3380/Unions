@@ -17,7 +17,7 @@
 								<li><a href="<?php echo MAINDIR ?>">Features</a></li>
 								<li><a href="<?php echo MAINDIR ?>">Hours</a></li>
 <?php
-$isAdmin = "true";
+$isAdmin = true;
 if ($isAdmin) {
 ?>
 								<li><a href="<?php echo MAINDIR ?>">Admin Portal</a></li>
