@@ -1,7 +1,7 @@
 <?php
 $query = "SELECT category_id, name FROM category ORDER BY name ASC";
 $result = pg_query($query);
-if (!$dbconn) {
+if (!$result) {
 	customError('Query failed.');
 }
 $cats = pg_num_rows($result);
@@ -10,9 +10,9 @@ while ($result_line = pg_fetch_array($result, null, PGSQL_BOTH)) {
 	$categories[$result_line[0]] = $result_line[1];
 }
 
-$query = "SELECT policy_id, title FROM policy";
+$query = "SELECT policy_id, title FROM policy ORDER BY title ASC";
 $result = pg_query($query);
-if (!$dbconn) {
+if (!$result) {
 	customError('Query failed.');
 }
 $pols = pg_num_rows($result);
@@ -21,9 +21,9 @@ while ($result_line = pg_fetch_array($result, null, PGSQL_BOTH)) {
 	$policies[$result_line[0]] = $result_line[1];
 }
 
-$query = "SELECT tag_id, tag FROM tags";
+$query = "SELECT tag_id, tag FROM tags ORDER BY tag ASC";
 $result = pg_query($query);
-if (!$dbconn) {
+if (!$result) {
 	customError('Query failed.');
 }
 $tags = pg_num_rows($result);
@@ -41,7 +41,7 @@ $user = "&lt;username&gt;";
 <small>Note: adding, removing, and editing a policy's tag(s) can be done in the policy > edit menu.</small>
 <div id="accordion-resizer" class="ui-widget-content">
 	<div id="accordion">
-		<h3 style="font: 80% 'Trebuchet MS', sans-serif;">Categories - <small><?php echo $cats ?> total</small><button class="form_button" style="float: right;" onclick="window.location.href = '?type=cat&action=add';">Add</button></h3>
+		<h3 style="font: 80% 'Trebuchet MS', sans-serif;">Categories - <small><?php echo $cats ?> total</small><button class="form_button add_button" id="cat" style="float: right;">Add</button></h3>
 		<div>
 			<table>
 				<tr>
@@ -51,13 +51,13 @@ $user = "&lt;username&gt;";
 <?php
 foreach ($categories as $key => $value) {
 	echo "\t\t\t\t<tr>\n";
-	echo "\t\t\t\t\t<td><button class=\"form_button\">Edit</button></td><td><button class=\"form_button\">Delete</button></td><td width=\"100%\">$value</td>\n";
+	echo "\t\t\t\t\t<td><button class=\"form_button edit_button\" type=\"cat\" id=\"$key\">Edit</button></td><td><button class=\"form_button del_button\" type=\"cat\" id=\"$key\" value=\"$value\">Delete</button></td><td width=\"100%\">$value</td>\n";
 	echo "\t\t\t\t</tr>\n";
 }
 ?>
 			</table>
 		</div>
-		<h3 style="font: 80% 'Trebuchet MS', sans-serif;">Policies - <small><?php echo $pols ?> total</small><button class="form_button" style="float: right;" onclick="window.location.href = '?type=pol&action=add';">Add</button></h3>
+		<h3 style="font: 80% 'Trebuchet MS', sans-serif;">Policies - <small><?php echo $pols ?> total</small><button class="form_button add_button" id="pol" style="float: right;">Add</button></h3>
 		<div>
 			<table>
 				<tr>
@@ -67,13 +67,13 @@ foreach ($categories as $key => $value) {
 <?php
 foreach ($policies as $key => $value) {
 	echo "\t\t\t\t<tr>\n";
-	echo "\t\t\t\t\t<td><button class=\"form_button\">Edit</button></td><td><button class=\"form_button\">Delete</button></td><td width=\"100%\">" . htmlspecialchars_decode($value) . "</td>\n";
+	echo "\t\t\t\t\t<td><button class=\"form_button edit_button\" type=\"pol\" id=\"$key\">Edit</button></td><td><button class=\"form_button del_button\" type=\"pol\" id=\"$key\" value=\"$value\">Delete</button></td><td width=\"100%\">" . htmlspecialchars_decode($value) . "</td>\n";
 	echo "\t\t\t\t</tr>\n";
 }
 ?>
 			</table>
 		</div>
-		<h3 style="font: 80% 'Trebuchet MS', sans-serif;">Tags - <small><?php echo $tags ?> total</small><button class="form_button" style="float: right;" onclick="window.location.href = '?type=tag&action=add';">Add</button></h3>
+		<h3 style="font: 80% 'Trebuchet MS', sans-serif;">Tags - <small><?php echo $tags ?> total</small><button class="form_button add_button" id="tag" style="float: right;">Add</button></h3>
 		<div>
 			<table>
 				<tr>
@@ -83,7 +83,7 @@ foreach ($policies as $key => $value) {
 <?php
 foreach ($tags_array as $key => $value) {
 	echo "\t\t\t\t<tr>\n";
-	echo "\t\t\t\t\t<td><button class=\"form_button\">Edit</button></td><td><button class=\"form_button\">Delete</button></td><td width=\"100%\">$value</td>\n";
+	echo "\t\t\t\t\t<td><button class=\"form_button edit_button\" type=\"tag\" id=\"$key\">Edit</button></td><td><button class=\"form_button del_button\" type=\"tag\" id=\"$key\" value=\"$value\">Delete</button></td><td width=\"100%\">$value</td>\n";
 	echo "\t\t\t\t</tr>\n";
 }
 ?>
@@ -101,6 +101,18 @@ foreach ($tags_array as $key => $value) {
 			minHeight: 140,
 			minWidth: 200,
 			heightStyle: "fill"
+		});
+		
+		$(".add_button").click(function() {
+			window.location.href = '?type=' + $(this).attr('id') + '&action=add';
+		});
+		
+		$(".edit_button").click(function() {
+			window.location.href = '?type=' + $(this).attr('type') + '&action=edit&id=' + $(this).attr('id');
+		});
+		
+		$(".del_button").click(function() {
+			window.location.href = '?type=' + $(this).attr('type') + '&action=del&id=' + $(this).attr('id') + '&value=' + $(this).attr('value');
 		});
 	});
 </script>

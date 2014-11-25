@@ -29,8 +29,10 @@ switch ($_GET['action']) {
 		require "form_add.php";
 		break;
 	case "del":
+		require "form_delete.php";
 		break;
 	case "edit":
+		require "form_edit.php";
 		break;
 }
 ?>
