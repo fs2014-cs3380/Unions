@@ -21,42 +21,38 @@ $this->breadcrumbs = array(
             'validateOnSubmit' => true,
         ),
         'htmlOptions' => array(
-            'class'=>'well',
+            'class' => 'well',
         )
     )); ?>
 
     <p class="note">Fields with <span class="required">*</span> are required.</p>
 
-
-
     <?php echo $form->textFieldGroup($model, 'username', array(
-        'widgetOptions'=>array(
-            'htmlOptions'=>array(
-                'style'=>'max-width: 400px;',
+        'widgetOptions' => array(
+            'htmlOptions' => array(
+                'style' => 'max-width: 400px;',
             )
         ),
     )); ?>
-
-
 
     <?php echo $form->passwordFieldGroup($model, 'password', array(
-        'widgetOptions'=>array(
-            'htmlOptions'=>array(
-                'style'=>'max-width: 400px;',
+        'widgetOptions' => array(
+            'htmlOptions' => array(
+                'style' => 'max-width: 400px;',
             )
         ),
     )); ?>
-    <p class="hint">
+    <!--<p class="hint">
         Hint: You may login with <kbd>demo</kbd>/<kbd>demo</kbd> or <kbd>admin</kbd>/<kbd>admin</kbd>.
-    </p>
+    </p>-->
 
 
-        <?php echo $form->checkBoxGroup($model, 'rememberMe'); ?>
+    <?php /*echo $form->checkBoxGroup($model, 'rememberMe'); */ ?>
 
     <?php $this->widget('booster.widgets.TbButton', array(
-        'buttonType'=>'submit',
-        'context'=>'primary',
-        'label'=>'Login',
+        'buttonType' => 'submit',
+        'context' => 'primary',
+        'label' => 'Login',
     )); ?>
 
     <?php $this->endWidget(); ?>

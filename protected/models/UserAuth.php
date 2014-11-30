@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "user_auth".
+ * This is the model class for table "unions.user_auth".
  *
- * The followings are the available columns in table 'user_auth':
+ * The followings are the available columns in table 'unions.user_auth':
  * @property integer $user_id
  * @property string $password_hash
  * @property string $salt
@@ -13,12 +13,13 @@
  */
 class UserAuth extends CActiveRecord
 {
+
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'user_auth';
+		return 'unions.user_auth';
 	}
 
 	/**
@@ -57,7 +58,7 @@ class UserAuth extends CActiveRecord
 	{
 		return array(
 			'user_id' => 'User',
-			'password_hash' => 'Password Hash',
+			'password_hash' => 'Password',
 			'salt' => 'Salt',
 		);
 	}
@@ -99,4 +100,13 @@ class UserAuth extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function hashPassword($password){
+        $this->salt = sha1(mt_rand());
+        $this->password_hash = sha1($this->salt.$password);
+    }
+
+    public function validatePassword($password){
+        return $this->password_hash===sha1($this->salt.$password);
+    }
 }
