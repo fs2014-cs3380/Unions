@@ -63,13 +63,12 @@ class UserController extends Controller
     {
         $model = new User;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', "Registration successful. Please log in to continue!");
+                $this->redirect(array('/site/login'));
+            }
         }
 
         $this->render('create', array(
@@ -86,13 +85,13 @@ class UserController extends Controller
     {
         $model = $this->loadModel($id);
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('view', 'id' => $model->user_id));
         }
 
         $this->render('update', array(
@@ -134,8 +133,6 @@ class UserController extends Controller
      */
     public function actionAdmin()
     {
-        $this->layout = '//layouts/column1';
-
         $model = new User('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['User']))

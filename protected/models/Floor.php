@@ -1,50 +1,29 @@
 <?php
 
 /**
- * This is the model class for table "unions.user".
+ * This is the model class for table "unions.floor".
  *
- * The followings are the available columns in table 'unions.user':
- * @property integer $user_id
- * @property string $email_address
- * @property string $sso
- * @property string $personal_info
- * @property string $last_login
+ * The followings are the available columns in table 'unions.floor':
+ * @property integer $floor_id
+ * @property string $name
+ * @property integer $building_id
  * @property string $create_time
  * @property integer $create_user_id
  * @property string $update_time
  * @property integer $update_user_id
  *
  * The followings are the available model relations:
- * @property UserAuth $userAuth
- * @property Reservation[] $reservations
- * @property Item[] $unions.items
+ * @property EventSpace[] $eventSpaces
+ * @property Building $building
  */
-class User extends UActiveRecord
+class Floor extends UActiveRecord
 {
-
-    public $password;
-    public $password_repeat;
-
-    protected function afterSave()
-    {
-        if ($this->isNewRecord)
-            $auth = new UserAuth();
-        else
-            $auth = $this->userAuth;
-
-        $auth->user_id = $this->user_id;
-        $auth->hashPassword($this->password);
-        $auth->save();
-
-        return parent::afterSave();
-    }
-
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'unions.user';
+		return 'unions.floor';
 	}
 
 	/**
@@ -55,16 +34,13 @@ class User extends UActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('email_address', 'unique'),
-            array('email_address', 'email'),
-			array('email_address, password, password_repeat', 'required'),
-			array('email_address', 'length', 'max'=>80),
-            array('password', 'compare'),
-			array('sso', 'length', 'max'=>30),
-			array('personal_info, last_login, create_time, update_time', 'safe'),
+			array('building_id', 'required'),
+			array('building_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>40),
+			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user_id, email_address, sso, personal_info, last_login, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
+			array('floor_id, name, building_id, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,9 +52,8 @@ class User extends UActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'userAuth' => array(self::HAS_ONE, 'UserAuth', 'user_id'),
-			'reservations' => array(self::HAS_MANY, 'Reservation', 'user_id'),
-			'unions.items' => array(self::MANY_MANY, 'Item', 'item_claim(user_id, item_id)'),
+			'eventSpaces' => array(self::HAS_MANY, 'EventSpace', 'floor_id'),
+			'building' => array(self::BELONGS_TO, 'Building', 'building_id'),
 		);
 	}
 
@@ -88,11 +63,9 @@ class User extends UActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'user_id' => 'User',
-			'email_address' => 'Email Address',
-			'sso' => 'Sso',
-			'personal_info' => 'Personal Info',
-			'last_login' => 'Last Login',
+			'floor_id' => 'Floor',
+			'name' => 'Name',
+			'building_id' => 'Building',
 			'create_time' => 'Create Time',
 			'create_user_id' => 'Create User',
 			'update_time' => 'Update Time',
@@ -118,11 +91,9 @@ class User extends UActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('email_address',$this->email_address,true);
-		$criteria->compare('sso',$this->sso,true);
-		$criteria->compare('personal_info',$this->personal_info,true);
-		$criteria->compare('last_login',$this->last_login,true);
+		$criteria->compare('floor_id',$this->floor_id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('building_id',$this->building_id);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('create_user_id',$this->create_user_id);
 		$criteria->compare('update_time',$this->update_time,true);
@@ -137,7 +108,7 @@ class User extends UActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return Floor the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
