@@ -18,11 +18,19 @@ return array(
         ),
 
         'db'=>array(
-            'connectionString' => 'mysql:host=127.0.0.1;dbname=unions',
+            'connectionString' => 'pgsql:host=127.0.0.1;dbname=postgres',
             'emulatePrepare' => true,
+            'username' => 'postgres',
+            'password' => 'cr1125-a',
+            'charset' => 'utf8',
+        ),
+
+        'db_ems'=>array(
+            'connectionString' => 'sqlsrv:server=argo.col.missouri.edu;Database=EMS_Staging',
             'username' => 'unions',
             'password' => 'iVIOwk*ivx',
             'charset' => 'utf8',
+            'class' => 'CDbConnection'
         ),
 
         'session'=>array(

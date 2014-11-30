@@ -1,25 +1,31 @@
 <?php
 
 /**
- * This is the model class for table "unions.user_auth".
+ * This is the model class for table "tblGroupNameChange".
  *
- * The followings are the available columns in table 'unions.user_auth':
- * @property integer $user_id
- * @property string $password_hash
- * @property string $salt
- *
- * The followings are the available model relations:
- * @property User $user
+ * The followings are the available columns in table 'tblGroupNameChange':
+ * @property integer $group_id
+ * @property string $new_name
+ * @property string $old_name
+ * @property integer $status
+ * @property string $create_pawprint
  */
-class UserAuth extends CActiveRecord
+class GroupNameChange extends CActiveRecord
 {
+
+    public function beforeValidate(){
+        $model = People::model()->find("GroupID = '$this->group_id';");
+        $this->old_name = $model->GroupName;
+
+        return parent::beforeSave();
+    }
 
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'unions.user_auth';
+		return 'tblGroupNameChange';
 	}
 
 	/**
@@ -30,12 +36,12 @@ class UserAuth extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, password_hash, salt', 'required'),
-			array('user_id', 'numerical', 'integerOnly'=>true),
-			array('password_hash, salt', 'length', 'max'=>40),
+			array('group_id, new_name, old_name', 'required'),
+			array('status', 'numerical', 'integerOnly'=>true),
+			array('new_name, old_name, create_pawprint', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user_id, password_hash, salt', 'safe', 'on'=>'search'),
+			array('group_id, new_name, old_name, status, create_pawprint', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,7 +53,6 @@ class UserAuth extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -57,9 +62,11 @@ class UserAuth extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'user_id' => 'User',
-			'password_hash' => 'Password',
-			'salt' => 'Salt',
+			'group_id' => 'Group',
+			'new_name' => 'New Name',
+			'old_name' => 'Department',
+			'status' => 'Status',
+			'create_pawprint' => 'Create Pawprint',
 		);
 	}
 
@@ -81,9 +88,11 @@ class UserAuth extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('password_hash',$this->password_hash,true);
-		$criteria->compare('salt',$this->salt,true);
+		$criteria->compare('group_id',$this->group_id);
+		$criteria->compare('new_name',$this->new_name,true);
+		$criteria->compare('old_name',$this->old_name,true);
+		$criteria->compare('status',$this->status);
+		$criteria->compare('create_pawprint',$this->create_pawprint,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -91,22 +100,23 @@ class UserAuth extends CActiveRecord
 	}
 
 	/**
+	 * @return CDbConnection the database connection used for this class
+	 */
+	public function getDbConnection()
+	{
+		return Yii::app()->db_ems;
+	}
+
+	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return UserAuth the static model class
+	 * @return GroupNameChange the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
 
-    public function hashPassword($password){
-        $this->salt = sha1(mt_rand());
-        $this->password_hash = sha1($this->salt.$password);
-    }
 
-    public function validatePassword($password){
-        return $this->password_hash===sha1($this->salt.$password);
-    }
 }

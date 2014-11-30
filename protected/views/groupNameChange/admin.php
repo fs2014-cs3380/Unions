@@ -1,12 +1,12 @@
 <?php
 $this->breadcrumbs=array(
-	'Users'=>array('index'),
+	'Group Name Changes'=>array('index'),
 	'Manage',
 );
 
 $this->menu=array(
-array('label'=>'List User','url'=>array('index')),
-array('label'=>'Create User','url'=>array('create')),
+array('label'=>'List GroupNameChange','url'=>array('index')),
+array('label'=>'Create GroupNameChange','url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -15,7 +15,7 @@ $('.search-form').toggle();
 return false;
 });
 $('.search-form form').submit(function(){
-$.fn.yiiGridView.update('user-grid', {
+$.fn.yiiGridView.update('group-name-change-grid', {
 data: $(this).serialize()
 });
 return false;
@@ -23,7 +23,7 @@ return false;
 ");
 ?>
 
-<h1>Manage Users</h1>
+<h1>Manage Group Name Changes</h1>
 
 <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
@@ -39,21 +39,15 @@ return false;
 </div><!-- search-form -->
 
 <?php $this->widget('booster.widgets.TbGridView',array(
-'id'=>'user-grid',
+'id'=>'group-name-change-grid',
 'dataProvider'=>$model->search(),
 'filter'=>$model,
 'columns'=>array(
-		'user_id',
-		'email_address',
-		'sso',
-		'personal_info',
-		'last_login',
-		'create_time',
-		/*
-		'create_user_id',
-		'update_time',
-		'update_user_id',
-		*/
+		'group_id',
+		'new_name',
+		'old_name',
+		'status',
+		'create_pawprint',
 array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),

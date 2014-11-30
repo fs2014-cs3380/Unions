@@ -1,25 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "unions.user_auth".
+ * This is the model class for table "unions.feature".
  *
- * The followings are the available columns in table 'unions.user_auth':
- * @property integer $user_id
- * @property string $password_hash
- * @property string $salt
- *
- * The followings are the available model relations:
- * @property User $user
+ * The followings are the available columns in table 'unions.feature':
+ * @property integer $feature_id
+ * @property string $name
+ * @property string $url
+ * @property integer $event_space_id
+ * @property string $create_time
+ * @property integer $create_user_id
+ * @property string $update_time
+ * @property integer $update_user_id
  */
-class UserAuth extends CActiveRecord
+class Feature extends UActiveRecord
 {
-
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'unions.user_auth';
+		return 'unions.feature';
 	}
 
 	/**
@@ -30,12 +31,14 @@ class UserAuth extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, password_hash, salt', 'required'),
-			array('user_id', 'numerical', 'integerOnly'=>true),
-			array('password_hash, salt', 'length', 'max'=>40),
+			array('name', 'required'),
+			array('event_space_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>45),
+			array('url', 'length', 'max'=>150),
+			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user_id, password_hash, salt', 'safe', 'on'=>'search'),
+			array('feature_id, name, url, event_space_id, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,7 +50,6 @@ class UserAuth extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -57,9 +59,14 @@ class UserAuth extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'user_id' => 'User',
-			'password_hash' => 'Password',
-			'salt' => 'Salt',
+			'feature_id' => 'Feature',
+			'name' => 'Name',
+			'url' => 'Url',
+			'event_space_id' => 'Event Space',
+			'create_time' => 'Create Time',
+			'create_user_id' => 'Create User',
+			'update_time' => 'Update Time',
+			'update_user_id' => 'Update User',
 		);
 	}
 
@@ -81,9 +88,14 @@ class UserAuth extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('password_hash',$this->password_hash,true);
-		$criteria->compare('salt',$this->salt,true);
+		$criteria->compare('feature_id',$this->feature_id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('url',$this->url,true);
+		$criteria->compare('event_space_id',$this->event_space_id);
+		$criteria->compare('create_time',$this->create_time,true);
+		$criteria->compare('create_user_id',$this->create_user_id);
+		$criteria->compare('update_time',$this->update_time,true);
+		$criteria->compare('update_user_id',$this->update_user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -94,19 +106,10 @@ class UserAuth extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return UserAuth the static model class
+	 * @return Feature the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
-    public function hashPassword($password){
-        $this->salt = sha1(mt_rand());
-        $this->password_hash = sha1($this->salt.$password);
-    }
-
-    public function validatePassword($password){
-        return $this->password_hash===sha1($this->salt.$password);
-    }
 }
