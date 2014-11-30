@@ -9,9 +9,9 @@ SET SEARCH_PATH = unions;
 /* USER TABLES */
 CREATE TABLE "user" (
   user_id        SERIAL NOT NULL PRIMARY KEY,
-  email_address  VARCHAR(80),
+  email_address  VARCHAR(80) NOT NULL UNIQUE,
   sso            VARCHAR(30),
-  personal_info  TEXT   NOT NULL, /*First Name, Last Name, Preferred Name, Preferred Email Address*/
+  personal_info  TEXT, /*First Name, Last Name, Preferred Name, Preferred Email Address*/
   last_login     TIMESTAMP,
   create_time    TIMESTAMP,
   create_user_id INTEGER,
@@ -63,9 +63,9 @@ CREATE TABLE building (
   building_id    SERIAL PRIMARY KEY NOT NULL,
   name           VARCHAR(60)        NOT NULL,
 /*coordinate*/
-  address        VARCHAR(100)       NOT NULL,
-  open_time      TIMESTAMP          NOT NULL,
-  close_time     TIME               NOT NULL,
+  address        VARCHAR(100),
+  open_time      TIME,
+  close_time     TIME,
   create_time    TIME,
   create_user_id INTEGER,
   update_time    TIMESTAMP,
@@ -341,3 +341,6 @@ VALUES (1, 3),
   (45, 1),
   (46, 1),
   (47, 1);
+
+INSERT INTO building (name)
+VALUES ('Memorial Union', 'MU Student Center');
