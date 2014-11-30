@@ -18,10 +18,10 @@ return array(
         ),
 
         'db'=>array(
-            'connectionString' => 'mysql:host=127.0.0.1;dbname=unions',
+            'connectionString' => 'pgsql:host=127.0.0.1;dbname=postgres',
             'emulatePrepare' => true,
-            'username' => 'unions',
-            'password' => 'iVIOwk*ivx',
+            'username' => 'postgres',
+            'password' => 'cr1125-a',
             'charset' => 'utf8',
         ),
 
