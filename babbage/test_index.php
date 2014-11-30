@@ -1,7 +1,7 @@
 <?php
-$mainDir = "/students/groups/cs3380f14grp18/public_html/";
+print_r ($_SERVER); //['CONTEXT_DOCUMENT_ROOT'];
 
-require $mainDir . "/includes/header.php";
+//require $_SERVER['CONTEXT_DOCUMENT_ROOT'] . "/includes/header.php";
 ?>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis porttitor tortor. Donec imperdiet risus in augue consectetur, id congue ligula volutpat. Integer varius commodo nisl quis dictum. Curabitur consectetur vehicula urna et lobortis. Maecenas accumsan nisi erat, aliquet viverra nisi pulvinar eu. In libero arcu, ultricies quis neque sed, sollicitudin hendrerit odio. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut pellentesque aliquet tellus. Mauris in sapien mollis, ultrices elit id, fermentum arcu. Ut et bibendum lorem. In hac habitasse platea dictumst. Sed sit amet pulvinar tortor. Donec interdum tortor feugiat mi consequat interdum.</p>
 <p>In non luctus diam. Sed metus tortor, laoreet nec mollis eget, blandit nec odio. Aenean volutpat convallis purus, vitae fermentum tortor mollis et. Ut nisl eros, tincidunt sed lobortis non, sodales in diam. Donec et eros lorem. Duis tincidunt erat sit amet tortor consectetur efficitur. Fusce tincidunt dui eu neque lobortis, id ultrices massa iaculis. Ut in ligula dolor. Nulla at elit tincidunt, tempor purus in, accumsan orci. Vestibulum egestas, sem ut posuere lobortis, est odio pharetra lorem, id sodales elit nisl ut purus. Aliquam erat volutpat. Sed vel justo ornare, pharetra magna id, commodo nunc. Nunc at nisi rutrum velit vestibulum elementum. Proin semper molestie auctor. Cras sed sollicitudin tortor. Curabitur sem mauris, mollis in risus ac, tincidunt tempus nisl.</p>
@@ -12,5 +12,5 @@ require $mainDir . "/includes/header.php";
 <p>Proin dolor mauris, laoreet sed purus non, pharetra condimentum ipsum. Nullam erat justo, auctor sit amet suscipit a, ultrices a arcu. Donec eleifend orci nulla, eu finibus dolor finibus ac. Sed tristique leo id posuere pharetra. Curabitur tempus, eros eget varius tincidunt, sapien libero faucibus ante, in lacinia nulla diam sed eros. Ut rhoncus turpis tortor. Curabitur ut facilisis augue. Nam at nunc a diam malesuada posuere. Suspendisse justo arcu, dictum id aliquet vitae, maximus at tortor.</p>
 <p>Suspendisse potenti. Maecenas eget metus et elit venenatis sagittis at non tortor. Nam sed magna hendrerit, feugiat justo quis, porta arcu. Morbi finibus dolor orci, eget vulputate lacus sagittis vitae. Proin non ex eu tortor venenatis commodo. Aliquam pulvinar lectus eu ligula porttitor luctus. Mauris luctus iaculis est in pulvinar. Maecenas purus est, ultricies eget mattis quis, dictum a libero.</p>
 <?php
-require $mainDir . "/includes/footer.php";
+//require $_SERVER['CONTEXT_DOCUMENT_ROOT'] . "/includes/footer.php";
 ?>
