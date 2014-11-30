@@ -33,7 +33,7 @@ abstract class UActiveRecord extends CActiveRecord
                 'createAttribute' => 'create_time',
                 'updateAttribute' => 'update_time',
                 'setUpdateOnCreate' => true,
-                'timestampExpression' => new CDbExpression('GETDATE()'),
+                'timestampExpression' => new CDbExpression('NOW()'),
             ),
         );
     }
