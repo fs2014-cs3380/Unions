@@ -8,7 +8,7 @@ SET SEARCH_PATH = unions;
 
 /* USER TABLES */
 CREATE TABLE "user" (
-  user_id        SERIAL NOT NULL PRIMARY KEY,
+  user_id        SERIAL      NOT NULL PRIMARY KEY,
   email_address  VARCHAR(80) NOT NULL UNIQUE,
   sso            VARCHAR(30),
   personal_info  TEXT, /*First Name, Last Name, Preferred Name, Preferred Email Address*/
@@ -87,7 +87,7 @@ CREATE TABLE event_space (
   name           VARCHAR(45) NOT NULL,
   floor_id       INTEGER     NOT NULL REFERENCES floor,
   capacity       INTEGER     NOT NULL,
-  /*reserved       BOOLEAN DEFAULT FALSE -- This should be checked by start and end time and not stored in the database */
+/*reserved       BOOLEAN DEFAULT FALSE -- This should be checked by start and end time and not stored in the database */
   image_path     VARCHAR(100),
   create_time    TIMESTAMP,
   create_user_id INTEGER,
@@ -107,12 +107,12 @@ CREATE TABLE reservation (
 );
 
 CREATE TABLE feature (
-  feature_id     SERIAL      NOT NULL,
-  floor_id  	 INTEGER     NOT NULL REFERENCES floor,
-  building_id   INTEGER NOT NULL REFERENCES building,
+  feature_id     SERIAL       NOT NULL,
+  floor_id       INTEGER      NOT NULL REFERENCES floor,
+  building_id    INTEGER      NOT NULL REFERENCES building,
   name           VARCHAR(100) NOT NULL,
   url            VARCHAR(150),
-  event_space_id INTEGER , /* NULL is allowed so no foreign key */
+  event_space_id INTEGER, /* NULL is allowed so no foreign key */
   create_time    TIMESTAMP,
   create_user_id INTEGER,
   update_time    TIMESTAMP,
@@ -120,31 +120,31 @@ CREATE TABLE feature (
 );
 
 CREATE TABLE attraction (
-  attraction_id SERIAL PRIMARY KEY NOT NULL,
-  name           VARCHAR(100) NOT NULL,
-  image_path VARCHAR(100),
-  lim_id INTEGER,
-  information_url VARCHAR(100),
+  attraction_id    SERIAL PRIMARY KEY NOT NULL,
+  name             VARCHAR(100)       NOT NULL,
+  image_path       VARCHAR(100),
+  lim_id           INTEGER,
+  information_url  VARCHAR(100),
   url_display_name VARCHAR(60),
-  create_time TIMESTAMP, 
-  create_user_id INTEGER,
-  update_time    TIMESTAMP,
-  update_user_id INTEGER,
-  building_id    INTEGER NOT NULL REFERENCES building
+  create_time      TIMESTAMP,
+  create_user_id   INTEGER,
+  update_time      TIMESTAMP,
+  update_user_id   INTEGER,
+  building_id      INTEGER            NOT NULL REFERENCES building
 );
 /* END RESERVATION TABLES */
 
 /* LOST & FOUND TABLES */
 CREATE TABLE item_status (
-  item_status_id INTEGER NOT NULL PRIMARY KEY,
-  description VARCHAR(45) NOT NULL
+  item_status_id INTEGER     NOT NULL PRIMARY KEY,
+  description    VARCHAR(45) NOT NULL
 );
 
 /* @todo Add constraint for values only equal to -1, 0, or 1 */
 CREATE TABLE item_type (
-  item_type_id INTEGER NOT NULL PRIMARY KEY,
-  name VARCHAR(45) NOT NULL,
-  status INTEGER NOT NULL DEFAULT 0, /* -1 = DECLINED, 0 = PENDING, 1 = APPROVED */
+  item_type_id   INTEGER     NOT NULL PRIMARY KEY,
+  name           VARCHAR(45) NOT NULL,
+  status         INTEGER     NOT NULL DEFAULT 0, /* -1 = DECLINED, 0 = PENDING, 1 = APPROVED */
   create_time    TIMESTAMP,
   create_user_id INTEGER,
   update_time    TIMESTAMP,
@@ -152,22 +152,22 @@ CREATE TABLE item_type (
 );
 
 CREATE TABLE item (
-  item_id INTEGER NOT NULL PRIMARY KEY,
-  location VARCHAR(255) NOT NULL,
-  description TEXT NOT NULL,
+  item_id          INTEGER      NOT NULL PRIMARY KEY,
+  location         VARCHAR(255) NOT NULL,
+  description      TEXT         NOT NULL,
   found_user_email VARCHAR(100) NOT NULL,
-  found_date DATE NOT NULL,
-  item_type_id INTEGER NOT NULL REFERENCES item_type,
-  item_status_id INTEGER NOT NULL REFERENCES item_status,
-  create_time    TIMESTAMP,
-  create_user_id INTEGER,
-  update_time    TIMESTAMP,
-  update_user_id INTEGER
+  found_date       DATE         NOT NULL,
+  item_type_id     INTEGER      NOT NULL REFERENCES item_type,
+  item_status_id   INTEGER      NOT NULL REFERENCES item_status,
+  create_time      TIMESTAMP,
+  create_user_id   INTEGER,
+  update_time      TIMESTAMP,
+  update_user_id   INTEGER
 );
 
 CREATE TABLE item_claim (
-  item_id INTEGER NOT NULL REFERENCES item,
-  user_id INTEGER NOT NULL REFERENCES "user",
+  item_id    INTEGER NOT NULL REFERENCES item,
+  user_id    INTEGER NOT NULL REFERENCES "user",
   claim_time TIMESTAMP,
   PRIMARY KEY (item_id, user_id)
 );
@@ -185,7 +185,9 @@ VALUES ('Advertising', 0, 0),
 
 INSERT INTO policy (title, text, category_id, create_user_id, update_user_id)
 VALUES
-  ('Table Tents', '&lt;p&gt;Table tent space can be reserved for the Bengal Lair and Brady Student Commons in order to advertise for a variety of events. To reserve the right to place Table Tents, submit a reservation request &lt;a href=&quot;space-advertising.php&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;. Size and length of display are restricted. Any non-approved table tents will be removed and discarded at the discrescretion of the Unions.&lt;/p&gt;', 1, 0, 0),
+  ('Table Tents',
+   '&lt;p&gt;Table tent space can be reserved for the Bengal Lair and Brady Student Commons in order to advertise for a variety of events. To reserve the right to place Table Tents, submit a reservation request &lt;a href=&quot;space-advertising.php&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;. Size and length of display are restricted. Any non-approved table tents will be removed and discarded at the discrescretion of the Unions.&lt;/p&gt;',
+   1, 0, 0),
   ('Posting', '&lt;p&gt;Signs for designated posting areas in the Unions must be taken to the Information Desks for approval and posting.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Only signs advertising upcoming events held on campus will be approved.&lt;/li&gt;&lt;li&gt;Events must be sponsored by student organizations or campus departments&lt;/li&gt;&lt;li&gt;Signs must be appropriate for display in a public environment and no larger than 11&quot;x17&quot;.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Once approved, the sign will be hung by a member of the Unions staff. Signs may be hung for a period of two weeks, and will be taken down following the day of the event. If the display board is full, your sign will be hung as soon as space permits.&lt;/p&gt;&lt;p&gt;Any postings in unauthorized areas will be removed and discarded.  Details regarding the advertising can be found here.  One public posting bulletin board is located with the Memorial Student Union and does not require approval.  This bulletin board is cleared often.&lt;/p&gt;', 1, 0, 0),
   ('Accident and Incident Reports', '&lt;p&gt;Any individual involved in an accident or incident will be required to fill out an &lt;a href=&quot;http://www.umsystem.edu/ums/fa/management/records/forms/risk/&quot; target=&quot;_blank&quot;&gt;Accident Report Form&lt;/a&gt;.  Accidents and incidents include:  Any occurrence which results in bodily injury to or damage of property belonging to a student or member of the general public.  After assessing for the need for emergency care, a Unions staff member will fill out a report with the assistance of the individual involved in the accident or incident. &lt;/p&gt;&lt;p&gt;A copy of the form will be sent to Tracy Schultz, Assistant Director of Facilities, Missouri Student Unions.&lt;/p&gt;', 2, 0, 0),
   ('Bicycles, Skates, Roller Blades and Skateboards', '&lt;ul&gt;&lt;li&gt;Bicycles shall remain outside the Unions and should be secured to bicycle racks only.&lt;/li&gt;&lt;li&gt;Skateboarding, rollerblading and/or roller skating are prohibited inside the building, on the archway, steps and &lt;a href=&quot;http://ada.missouri.edu/&quot; target=&quot;_blank&quot; title=&quot;Accessibility and ADA Education Website&quot;&gt;ADA&lt;/a&gt; ramps&lt;/li&gt;&lt;li&gt;Individuals engaged in such acts shall be requested to discontinue the activity. Upon refusal, MUPD may be called to assist.&lt;/li&gt;&lt;li&gt;Bicycles and all other types of motorized personal vehicle are not allowed to be left within the Missouri Student Unions bicycle racks overnight.  Any bicycle or other type of personal vehicle that has been left at the racks for 10 consecutive nights will be tagged and removed by Unions staff and stored for 60 days then sent to &lt;a href=&quot;http://www.surplus.missouri.edu/&quot; target=&quot;_blank&quot;&gt;University of Missouri Surplus Property &lt;/a&gt;for auction.&lt;/li&gt;&lt;li&gt;Use of shoes with wheels are strongly discouraged while in the Missouri Student Unions&lt;/li&gt;&lt;/ul&gt;', 2, 0, 0),
@@ -226,12 +228,24 @@ VALUES
   ('Memorials', '&lt;p&gt;Requests to place memorials in the Unions or under the Tower should be directed to the Unions Administration, and are for no longer than 72 hours. Memorials will not be approved if they impede the use of the facility or pose a safety risk. Any memorials not collected by their owner after 72 hours become the property of the Unions.&lt;/p&gt;', 6, 0, 0),
   ('Political Activities&lt;small&gt;(Non-Student Government)&lt;/small&gt;', '&lt;p&gt;The University of Missouri encourages political awareness among members of the campus community by recognizing the educational and civic merits of participation. Furthermore, the University is committed as an institution to strict neutrality regarding candidates and political events, to providing equality of treatment in so far as possible, and to preserving the right to privacy enjoyed by each of our students. In support of these principles, the Unions established the following policies regarding political activities in addition to following regular facilities rules and guidelines. In this policy, the word &quot;candidate&quot; refers to one who has filed with the appropriate governmental agency. No advertising for candidates or ballot initiatives are allowed in the Unions buildings.&lt;/p&gt;&lt;p&gt;Recognized student groups of the University wishing to sponsor candidates or discussions of political issues appearing on ballots may reserve spaces for political activities in the MU Student Center, Kuhlman Court areas, and the Memorial Student Union by contacting the &lt;a href=&quot;mailto:reservations@missouri.edu&quot; target=&quot;_blank&quot;&gt;Event Management office&lt;/a&gt; at 884-8793. The following guidelines will apply:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;All tables and outdoor space is booked on a first-come, first-serve basis.&lt;/li&gt;&lt;li&gt;Only recognized student organizations, campus departments, or approved off-campus vendors may reserve table or outdoor space.&lt;/li&gt;&lt;li&gt;A detailed description of the event/activity must be provided prior to the event date.&lt;/li&gt;&lt;li&gt;An individual may not reserve a table or outdoor space. Only those tables that are scheduled and provided by the Unions will be permitted.&lt;/li&gt;&lt;li&gt;No signage or activity by any member of the organization shall extend beyond the table provided. Stopping people walking by, yelling, or calling attention to the table, or other harassing behavior towards the regular customers of the area is not permitted. Any loud boisterous activity that is disruptive is also not permitted. Organizations may not rearrange locations of tables assigned to them.&lt;/li&gt;&lt;li&gt;Organizations may not utilize any other area except that which they have reserved.&lt;/li&gt;&lt;li&gt;Campaign paraphernalia is prohibited within the Missouri Student Unions.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Organizations that engage in such activities will be asked to leave the premises immediately. Such behavior may result in the cancellation of current or subsequent bookings as well as the forfeiture of vendor fees for off-campus users.&lt;/p&gt;&lt;h2&gt;Political Rallies&lt;/h2&gt;&lt;p&gt;Groups that wish to reserve meeting room space in the Unions are required to coordinate the event with the following campus departments: &lt;a href=&quot;http://asum.missouri.edu&quot; target=&quot;_blank&quot;&gt; Associated Students of the University of Missouri&lt;/a&gt; (ASUM) - 573-882-2701, &lt;a href=&quot;http://www.umsystem.edu/ums/ur&quot; target=&quot;_blank&quot;&gt;University Relations&lt;/a&gt; - 573-882-2726 and &lt;a href=&quot;https://universityaffairs.missouri.edu/&quot; target=&quot;_blank&quot;&gt;University Affairs&lt;/a&gt; - 573-882-4523&lt;/p&gt;&lt;h2&gt;Voter Registration&lt;/h2&gt;&lt;p&gt;Groups that wish to conduct voter registration activities in the spaces scheduled by the Unions are required to coordinate the event with the &lt;a href=&quot;http://asum.missouri.edu&quot; target=&quot;_blank&quot;&gt; Associated Students of the University of Missouri&lt;/a&gt; (ASUM) - 573-882-2701, &lt;a href=&quot;http://www.umsystem.edu/ums/ur&quot; target=&quot;_blank&quot;&gt;University Relations&lt;/a&gt; - 573-882-2726, in order to ensure that the registration process complies with Missouri Statutes and the Office of the County Clerk.&lt;/p&gt;', 6, 0, 0),
   ('Parking', '&lt;p&gt;The Missouri Student Unions facilities are located in the heart of the MU campus.  Parking is available at various parking garages throughout the MU campus.  Please visit &lt;a href=&quot;http://parking.missouri.edu/&quot; target=&quot;_blank&quot;&gt;MU Parking and Transportation &lt;/a&gt;website for more details regarding these locations.&lt;/p&gt;&lt;p&gt;The Hitt Street Visitor parking lot is located right beside the MU Student Center and has limited metered parking as well as service parking.  Service parking spaces are limited to the Mizzou Store, Missouri Student Unions, Enterprise CarShare program, golf cart parking and department tenants. Guests who park in these spaces will be ticketed.&lt;/p&gt;&lt;p&gt;Memorial Union Visitor parking lot located to the east of Memorial Student Union has meter parking as well as service parking.  Service parking spaces are limited to the Missouri Student Unions, Enterprise CarShare program, golf cart parking and department tenants. Guests who park in these spaces will be ticketed.&lt;/p&gt;', 6, 0, 0),
-  ('Dance Floor', '&lt;p&gt;All student groups, departments, and off-campus guests of the Unions are required to rent a dance floor from the Unions when dances are held in carpeted rooms or areas. Customers wanting to have a dance in a carpeted room must request the dance floor when making the reservations. Extra setup time of one hour is required for groups using a dance floor. When planning an event, please allow for the additional setup time and budget accordingly for the setup rates listed below:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;The use of the dance floor is restricted to rooms on the north wing of Memorial Student Union.&lt;/li&gt;&lt;li&gt;The dance floor incurs a fee of $250. This includes setup and tear down of the floor.&lt;/li&gt;&lt;li&gt;The Unions retain the right to deny the use of the dance floor or limit the size based upon the availability of staff, equipment or intended use.&lt;/li&gt;&lt;li&gt;If the Unions does not have a dance floor available for an event, the sponsoring group is responsible for the renting and setup of a dance floor from an outside vendor. The &lt;a href=&quot;mailto:unions@missouri.edu&quot; target=&quot;_blank&quot;&gt;Unions Administration&lt;/a&gt; must pre-approve the use of any outside dance floor.&lt;/li&gt;&lt;/ul&gt;', 7, 0, 0),
-  ('Platforms/Stages', '&lt;p&gt;All users of the Unions platforms will be charged a per platform labor fee (see &lt;a href=&quot;http://www.unions.missouri.edu/pdf/Services_and_Equipment_List_2013-2014.pdf&quot; target=&quot;_blank&quot;&gt;Fees Schedule&lt;/a&gt;). Only members of the Unions staff, scheduled on duty, are allowed to setup/breakdown the Union platforms. Platforms may not be moved once the room has been setup. As with any setup, last minute changes or additions made less than 48 hours prior to the event are not guaranteed. Each of the Union platforms/stages are 6&#39; x 8&#39;.&lt;/p&gt;&lt;p&gt;The use of the platforms/stages is restricted to rooms on the north side of Memorial Student Union, the first floor of the MU Student Center and limited outdoor spaces within the Missouri Student Unions perimeter. The Unions also retains the right to deny the use of the platforms based upon the availability of staff and/or equipment.&lt;/p&gt;', 7, 0, 0),
-  ('Grills', '&lt;p&gt;In order to reduce the risks of property damage, loss of life, and preserve the beauty of our facilities we require that you adhere to the following guidelines below when hosting events that utilize grills or other sources of open flames. Failure to adhere to these guidelines will result in revocation of the reservation or event cancellation.&lt;/p&gt;&lt;h2&gt;Prior to the Event:&lt;/h2&gt;&lt;p&gt;An &lt;a href=&quot;http://ehs.missouri.edu/fire/open-flames.html&quot;&gt;Open Flame Permit&lt;/a&gt; request must be completed and submitted to &lt;a href=&quot;mailto:dorthd@missouri.edu&quot;&gt;David Dorth&lt;/a&gt; and &lt;a href=&quot;mailto:pasleyjam@missouri.edu&quot;&gt;Jim Pasley&lt;/a&gt; at Environmental Health & Services (EHS) at least one week prior to the scheduled event. EHS may need to conduct a site visit prior to approval.&lt;/p&gt;&lt;p&gt;A &lt;a href=&quot;http://ehs.missouri.edu/food/permits.html&quot;&gt;Temporary Food Permit&lt;/a&gt; request must be completed and submitted for any event that will be serving food, even if catered.&lt;/p&gt;&lt;p&gt;Please contact &lt;a href=&quot;http://ehs.missouri.edu/about/contact.html&quot;&gt;EHS&lt;/a&gt; for any inquiries relating to the permit acquisition process.&lt;/p&gt;&lt;h2&gt;Setup Specifications:&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;Maintain at least 10 ft. away from the building at all times. Excessive concentrations of smoke will discolor and damage the limestone façade. Additionally, do not place coals directly on concrete, brick, or grass. &lt;/li&gt;&lt;li&gt;Stay away from building entrances and exits. Ensure that emergency egress routes remain unobstructed.&lt;/li&gt;&lt;li&gt;The North sidewalk that runs the length of the Student Center is a fire department access road that must remain clear of obstructions.  Event setups must remain a minimum distance of 20ft. from the perimeter of the building&#39;s North side.&lt;/li&gt;&lt;li&gt;Avoid areas near intake ductwork that can allow smoke to waft into the building, triggering fire alarms and disturbing building occupants. This also reduces the likelihood that the building occupants may smell smoke which could lead them to think there is a fire. &lt;/li&gt;&lt;li&gt;Maintain a minimum of 15 ft. clearance around the grill(s) to limit the possibility of errant embers igniting or damaging nearby equipment.&lt;/li&gt;&lt;li&gt;Maintain an ABC multipurpose fire extinguisher nearby and have knowledge of how to use it.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;P.A.S.S.&lt;/strong&gt; = &lt;strong&gt;P&lt;/strong&gt;ull the pin, &lt;strong&gt;A&lt;/strong&gt;im at the base of the fire, &lt;strong&gt;S&lt;/strong&gt;queeze the handle and &lt;strong&gt;S&lt;/strong&gt;weep from side to side.&lt;/p&gt;&lt;h2&gt;Cleanup:&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;Assure all coals are “cold-out” prior to relocating the grill(s) or abandoning the area. The coals may appear extinguished, however, they may still be smoldering internally. Do not place coals in the trash where they may ignite a fire.  Dispose of cold coals properly at an off campus location.&lt;/li&gt;&lt;li&gt;Propane and other pressurized fuel tanks cannot be stored inside the building.&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;Rainy Forecast:&lt;/h2&gt;&lt;p&gt;If rain is forecasted for an event hosted outside, preparations can be made through the Events Management & Guests Relations Office for an alternate rain site location. &lt;/p&gt;&lt;p&gt;During rainy weather the grill may be situated outside the loading dock while adhering to the aforementioned clearance requirements. The cooking crew may take cover in the loading dock and then tend to the grill outside as needed. Under no circumstances may the grill be operated inside the loading dock. The grill must be located at least 10 ft. away from the threshold of the overhead doors.  The reason for this is two-fold. There are smoke detectors throughout the ductwork that may trigger a false alarm due to wafting smoke. Secondly, this reduces the risk of stray embers igniting the contents of the adjacent compactors. &lt;/p&gt;', 7, 0, 0),
-  ('Alcohol', '&lt;p&gt;The use or possession of any alcoholic beverage is prohibited on all University property, except in the residences of the President and Chancellors and in designated facilities, and for single events or reoccurring similar events where the sale, use or possession of alcohol may be allowed by appropriate University approval, subject to all legal requirements.&lt;br/&gt; The department or organization making a request to use alcoholic beverages on the MU campus must submit a University of Missouri Request to Use Alcoholic Beverages on University Property form to the &lt;a href=&quot;http://businessservices.missouri.edu/services/alcohol-use.html&quot; target=&quot;_blank&quot;&gt; MU Business Services Office&lt;/a&gt; no less than two weeks in advance of the event. A copy of the approved alcohol permit must be submitted to &lt;a href=&quot;mailto:reservations@missouri.edu&quot; target=&quot;_blank&quot;&gt; The Missouri Student Unions&lt;/a&gt; and a copy of the approved alcohol permit must be on display during the event. There must be a designated Responsible Person at the actual event. The Responsible Person needs to sign the form indicating they accept personal responsibility for ensuring that University policy and state laws governing use of alcoholic beverages are complied with, and accept financial responsibility for the activity. &lt;br/&gt; The University does not have a license to sell alcohol except in certain venues. If alcohol is going to be sold, a licensed business must be engaged to do so at the event.&lt;/p&gt;', 8, 0, 0),
-  ('Narcotics', '&lt;p&gt;The manufacture, sale, distribution, or possession, or use of narcotic, hallucinogenic, hypnotic, depressant, and/or stimulating drugs by any users of the Missouri Student Unions buildings without proper prescription or required license is prohibited. Appropriate civil action will be initiated for violators of this policy.&lt;/p&gt;', 8, 0, 0),
-  ('Smoking', '&lt;p&gt;Smoking, including e-cigarettes and vaporizers,  is not permitted anywhere within the Unions or the surrounding areas. Please see the &lt;a href=&quot;http://smokefree.missouri.edu/&quot; target=&quot;_blank&quot;&gt;University of Missouri Smoke-Free policy&lt;/a&gt; for more information. &lt;/p&gt;', 8, 0, 0);
+  ('Dance Floor',
+   '&lt;p&gt;All student groups, departments, and off-campus guests of the Unions are required to rent a dance floor from the Unions when dances are held in carpeted rooms or areas. Customers wanting to have a dance in a carpeted room must request the dance floor when making the reservations. Extra setup time of one hour is required for groups using a dance floor. When planning an event, please allow for the additional setup time and budget accordingly for the setup rates listed below:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;The use of the dance floor is restricted to rooms on the north wing of Memorial Student Union.&lt;/li&gt;&lt;li&gt;The dance floor incurs a fee of $250. This includes setup and tear down of the floor.&lt;/li&gt;&lt;li&gt;The Unions retain the right to deny the use of the dance floor or limit the size based upon the availability of staff, equipment or intended use.&lt;/li&gt;&lt;li&gt;If the Unions does not have a dance floor available for an event, the sponsoring group is responsible for the renting and setup of a dance floor from an outside vendor. The &lt;a href=&quot;mailto:unions@missouri.edu&quot; target=&quot;_blank&quot;&gt;Unions Administration&lt;/a&gt; must pre-approve the use of any outside dance floor.&lt;/li&gt;&lt;/ul&gt;',
+   7, 0, 0),
+  ('Platforms/Stages',
+   '&lt;p&gt;All users of the Unions platforms will be charged a per platform labor fee (see &lt;a href=&quot;http://www.unions.missouri.edu/pdf/Services_and_Equipment_List_2013-2014.pdf&quot; target=&quot;_blank&quot;&gt;Fees Schedule&lt;/a&gt;). Only members of the Unions staff, scheduled on duty, are allowed to setup/breakdown the Union platforms. Platforms may not be moved once the room has been setup. As with any setup, last minute changes or additions made less than 48 hours prior to the event are not guaranteed. Each of the Union platforms/stages are 6&#39; x 8&#39;.&lt;/p&gt;&lt;p&gt;The use of the platforms/stages is restricted to rooms on the north side of Memorial Student Union, the first floor of the MU Student Center and limited outdoor spaces within the Missouri Student Unions perimeter. The Unions also retains the right to deny the use of the platforms based upon the availability of staff and/or equipment.&lt;/p&gt;',
+   7, 0, 0),
+  ('Grills',
+   '&lt;p&gt;In order to reduce the risks of property damage, loss of life, and preserve the beauty of our facilities we require that you adhere to the following guidelines below when hosting events that utilize grills or other sources of open flames. Failure to adhere to these guidelines will result in revocation of the reservation or event cancellation.&lt;/p&gt;&lt;h2&gt;Prior to the Event:&lt;/h2&gt;&lt;p&gt;An &lt;a href=&quot;http://ehs.missouri.edu/fire/open-flames.html&quot;&gt;Open Flame Permit&lt;/a&gt; request must be completed and submitted to &lt;a href=&quot;mailto:dorthd@missouri.edu&quot;&gt;David Dorth&lt;/a&gt; and &lt;a href=&quot;mailto:pasleyjam@missouri.edu&quot;&gt;Jim Pasley&lt;/a&gt; at Environmental Health & Services (EHS) at least one week prior to the scheduled event. EHS may need to conduct a site visit prior to approval.&lt;/p&gt;&lt;p&gt;A &lt;a href=&quot;http://ehs.missouri.edu/food/permits.html&quot;&gt;Temporary Food Permit&lt;/a&gt; request must be completed and submitted for any event that will be serving food, even if catered.&lt;/p&gt;&lt;p&gt;Please contact &lt;a href=&quot;http://ehs.missouri.edu/about/contact.html&quot;&gt;EHS&lt;/a&gt; for any inquiries relating to the permit acquisition process.&lt;/p&gt;&lt;h2&gt;Setup Specifications:&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;Maintain at least 10 ft. away from the building at all times. Excessive concentrations of smoke will discolor and damage the limestone façade. Additionally, do not place coals directly on concrete, brick, or grass. &lt;/li&gt;&lt;li&gt;Stay away from building entrances and exits. Ensure that emergency egress routes remain unobstructed.&lt;/li&gt;&lt;li&gt;The North sidewalk that runs the length of the Student Center is a fire department access road that must remain clear of obstructions.  Event setups must remain a minimum distance of 20ft. from the perimeter of the building&#39;s North side.&lt;/li&gt;&lt;li&gt;Avoid areas near intake ductwork that can allow smoke to waft into the building, triggering fire alarms and disturbing building occupants. This also reduces the likelihood that the building occupants may smell smoke which could lead them to think there is a fire. &lt;/li&gt;&lt;li&gt;Maintain a minimum of 15 ft. clearance around the grill(s) to limit the possibility of errant embers igniting or damaging nearby equipment.&lt;/li&gt;&lt;li&gt;Maintain an ABC multipurpose fire extinguisher nearby and have knowledge of how to use it.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;P.A.S.S.&lt;/strong&gt; = &lt;strong&gt;P&lt;/strong&gt;ull the pin, &lt;strong&gt;A&lt;/strong&gt;im at the base of the fire, &lt;strong&gt;S&lt;/strong&gt;queeze the handle and &lt;strong&gt;S&lt;/strong&gt;weep from side to side.&lt;/p&gt;&lt;h2&gt;Cleanup:&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;Assure all coals are “cold-out” prior to relocating the grill(s) or abandoning the area. The coals may appear extinguished, however, they may still be smoldering internally. Do not place coals in the trash where they may ignite a fire.  Dispose of cold coals properly at an off campus location.&lt;/li&gt;&lt;li&gt;Propane and other pressurized fuel tanks cannot be stored inside the building.&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;Rainy Forecast:&lt;/h2&gt;&lt;p&gt;If rain is forecasted for an event hosted outside, preparations can be made through the Events Management & Guests Relations Office for an alternate rain site location. &lt;/p&gt;&lt;p&gt;During rainy weather the grill may be situated outside the loading dock while adhering to the aforementioned clearance requirements. The cooking crew may take cover in the loading dock and then tend to the grill outside as needed. Under no circumstances may the grill be operated inside the loading dock. The grill must be located at least 10 ft. away from the threshold of the overhead doors.  The reason for this is two-fold. There are smoke detectors throughout the ductwork that may trigger a false alarm due to wafting smoke. Secondly, this reduces the risk of stray embers igniting the contents of the adjacent compactors. &lt;/p&gt;',
+   7, 0, 0),
+  ('Alcohol',
+   '&lt;p&gt;The use or possession of any alcoholic beverage is prohibited on all University property, except in the residences of the President and Chancellors and in designated facilities, and for single events or reoccurring similar events where the sale, use or possession of alcohol may be allowed by appropriate University approval, subject to all legal requirements.&lt;br/&gt; The department or organization making a request to use alcoholic beverages on the MU campus must submit a University of Missouri Request to Use Alcoholic Beverages on University Property form to the &lt;a href=&quot;http://businessservices.missouri.edu/services/alcohol-use.html&quot; target=&quot;_blank&quot;&gt; MU Business Services Office&lt;/a&gt; no less than two weeks in advance of the event. A copy of the approved alcohol permit must be submitted to &lt;a href=&quot;mailto:reservations@missouri.edu&quot; target=&quot;_blank&quot;&gt; The Missouri Student Unions&lt;/a&gt; and a copy of the approved alcohol permit must be on display during the event. There must be a designated Responsible Person at the actual event. The Responsible Person needs to sign the form indicating they accept personal responsibility for ensuring that University policy and state laws governing use of alcoholic beverages are complied with, and accept financial responsibility for the activity. &lt;br/&gt; The University does not have a license to sell alcohol except in certain venues. If alcohol is going to be sold, a licensed business must be engaged to do so at the event.&lt;/p&gt;',
+   8, 0, 0),
+  ('Narcotics',
+   '&lt;p&gt;The manufacture, sale, distribution, or possession, or use of narcotic, hallucinogenic, hypnotic, depressant, and/or stimulating drugs by any users of the Missouri Student Unions buildings without proper prescription or required license is prohibited. Appropriate civil action will be initiated for violators of this policy.&lt;/p&gt;',
+   8, 0, 0),
+  ('Smoking',
+   '&lt;p&gt;Smoking, including e-cigarettes and vaporizers,  is not permitted anywhere within the Unions or the surrounding areas. Please see the &lt;a href=&quot;http://smokefree.missouri.edu/&quot; target=&quot;_blank&quot;&gt;University of Missouri Smoke-Free policy&lt;/a&gt; for more information. &lt;/p&gt;',
+   8, 0, 0);
 
 INSERT INTO tag (tag)
 VALUES ('Substance'),
@@ -345,160 +359,164 @@ VALUES (1, 3),
   (47, 1);
 
 INSERT INTO building (building_id, name, address, open_time, close_time, create_time, create_user_id, update_time, update_user_id)
-	VALUES 
-		(1, 'MU Student Center', '901 Rollins Rd, Columbia, MO 65211', '07:00', '24:00', '00:00', 0, '2004-10-19 10:23:54', 0),
-		(2, 'Memorial Student Union', 'Memorial Union, University of Missouri Columbia, MO 65201', '07:00', '24:00', '00:00', 0, '2004-10-19 10:23:54', 0);
-		
+VALUES
+  (1, 'MU Student Center', '901 Rollins Rd, Columbia, MO 65211', '07:00', '24:00', '00:00', 0, '2004-10-19 10:23:54',
+   0),
+  (2, 'Memorial Student Union', 'Memorial Union, University of Missouri Columbia, MO 65201', '07:00', '24:00', '00:00',
+   0, '2004-10-19 10:23:54', 0);
+
 INSERT INTO floor (floor_id, name, building_id, create_time, create_user_id, update_time, update_user_id)
-	VALUES 
-		(1, 'Ground Floor', 1, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(2, 'First Floor', 1,'2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(3, 'Second Floor', 1, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(4, 'Ground Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(5, 'First Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(6, 'Second Floor', 2,'2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(7, 'Third Floor', 2,'2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
+VALUES
+  (1, 'Ground Floor', 1, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (2, 'First Floor', 1, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (3, 'Second Floor', 1, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (4, 'Ground Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (5, 'First Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (6, 'Second Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (7, 'Third Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
 
 INSERT INTO attraction (attraction_id, name, image_path, lim_id, information_url, url_display_name, create_time, create_user_id, update_time, update_user_id, building_id)
-	VALUES 
-		(1, 'Wheatstone Bistro'		, '/attraction_images/wheatstoneBistro.jpg' , 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
-		(2, 'Starbucks Coffee'		, '/attraction_images/starbucks.png' , 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
-		(3, 'Craft Studio'		, '/attraction_images/craftstudio.jpg' , 0, 'http://craftstudio.missouri.edu/' , 'View Information', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
-		(4, 'Do Mundos Churrascaria', '/attraction_images/DoMundos.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
-		(5, 'Infusion Cafe', '/attraction_images/Infusion.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
-		(6, 'Kate & Emmas', '/attraction_images/KateEmmas.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
-		(7, 'Morts Grill', '/attraction_images/morts.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
-		(8, 'Pomodoro Pizza and Pasta' , '/attraction_images/DoMundos.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
-		(9, 'Sunshine Sushi', '/attraction_images/sunshineSushi.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
-		(10, 'Mizzou Market', '/attraction_images/mizMarketCentral.jpg', 0, 'http://dining.missouri.edu/places-to-eat/mizzou-market-central/' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
-		(11, 'The Mizzou Store', '/attraction_images/MizzouStore.png', 0, 'http://themizzoustore.com/' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
-		(12, 'TigerTech' , '/attraction_images/tigertech.png', 0, 'http://mutigertech.com/' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1);
+VALUES
+  (1, 'Wheatstone Bistro', '/attraction_images/wheatstoneBistro.jpg', 0, 'http://dining.missouri.edu/hours',
+   'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
+  (2, 'Starbucks Coffee', '/attraction_images/starbucks.png', 0, 'http://dining.missouri.edu/hours', 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
+  (3, 'Craft Studio', '/attraction_images/craftstudio.jpg', 0, 'http://craftstudio.missouri.edu/', 'View Information', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
+  (4, 'Do Mundos Churrascaria', '/attraction_images/DoMundos.jpg', 0, 'http://dining.missouri.edu/hours', 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+  (5, 'Infusion Cafe', '/attraction_images/Infusion.jpg', 0, 'http://dining.missouri.edu/hours', 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+  (6, 'Kate & Emmas', '/attraction_images/KateEmmas.jpg', 0, 'http://dining.missouri.edu/hours', 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+  (7, 'Morts Grill', '/attraction_images/morts.jpg', 0, 'http://dining.missouri.edu/hours', 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+  (8, 'Pomodoro Pizza and Pasta', '/attraction_images/DoMundos.jpg', 0, 'http://dining.missouri.edu/hours', 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+  (9, 'Sunshine Sushi', '/attraction_images/sunshineSushi.jpg', 0, 'http://dining.missouri.edu/hours', 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+  (10, 'Mizzou Market', '/attraction_images/mizMarketCentral.jpg', 0, 'http://dining.missouri.edu/places-to-eat/mizzou-market-central/', 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+  (11, 'The Mizzou Store', '/attraction_images/MizzouStore.png', 0, 'http://themizzoustore.com/', 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+  (12, 'TigerTech', '/attraction_images/tigertech.png', 0, 'http://mutigertech.com/', 'View Hours',
+   '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1);
 
 INSERT INTO feature (feature_id, floor_id, building_id, name, url, event_space_id, create_time, create_user_id, update_time, update_user_id)
-	VALUES 
-	(1, 1, 1, 'ID Office (G516)', 'https://doit.missouri.edu/id-cards/student.html', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(2, 1, 1, 'KCOU 88.1 FM (G234)', 'http://kcou.fm/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(3, 1, 1, 'LGBTQ Resource Center (G225)', 'http://lgbtq.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),  
-	(4, 1, 1, 'Maneater (G216)', 'http://www.themaneater.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(5, 1, 1, 'Multicultural Center (G107)', 'http://mizzoulife.missouri.edu/?p=747', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(6, 1, 1, 'MUTV (G228)', 'http://mutv.missouri.edu/', NULL,  '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(7, 1, 1, 'New Student Programs (G106)', 'http://newstudent.missouri.edu/', NULL,  '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(8, 1, 1, 'RSVP Office (G210)', 'http://rsvp.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(9, 1, 1, 'Student Conduct/Life (G206)', 'http://conduct.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(10, 1, 1, 'TigerTech', 'http://mubookstore.com/t-tigertech.aspx?skinid=3', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(11, 1, 1, 'Vending Machines', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(12, 1, 1, 'Wellness Resource Center', 'http://wellness.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(13, 1, 1, 'Womens Center', 'http://womenscenter.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(14, 2, 1, 'Bank of America ATM', 'http://bankofamerica.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(15, 2, 1, 'Boone County National Bank ATM' , 'https://www.boonebank.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(16, 2, 1, 'MSA/GPC Box Office', 'http://boxoffice.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(17, 2, 1, 'Digiprint', 'http://ps.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(18, 2, 1, 'DoMundos Churrascaria', 'http://www.unions.missouri.edu/food_all.php#mundos', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(19, 2, 1, 'Information Center', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(20, 2, 1, 'Infusion Cafe', 'http://www.unions.missouri.edu/food_all.php#infusion', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(21, 2, 1, 'Kansas City Room (1209B)', 'http://www.unions.missouri.edu/view-room?room_id=2452', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(22, 2, 1, 'Kate and Emmas Deli', 'http://www.unions.missouri.edu/food_all.php#kate', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(23, 2, 1, 'Mizzou Market', 'http://www.unions.missouri.edu/food_all.php#mizmarket', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(24, 2, 1, 'Mizzou Pharmacy', 'http://www.muhealth.org/MizzouPharmacy', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(25, 2, 1, 'Morts Grill', 'http://www.unions.missouri.edu/food_all.php#morts', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(26, 2, 1, 'Saint Louis Room (1209A)', 'http://www.unions.missouri.edu/view-room?room_id=2451', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(27, 2, 1, 'Student Entrepreneurial Center', 'http://www.unions.missouri.edu/entrepreneurial.php',  NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(28, 2, 1, 'Sunshine Sushi', 'http://www.unions.missouri.edu/food_all.php#sunshine', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(29, 2, 1, 'Tigers Credit Union ATM', 'http://tigerscu.org/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(30, 2, 1, 'The Shack', 'http://www.unions.missouri.edu/space-the-shack.php', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(31, 2, 1, 'UMB Bank ATM', 'http://www.umb.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(32, 2, 1, 'The Mizzou Store', 'http://themizzoustore.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(33, 2, 1, 'US Bank', 'http://www.usbank.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(34, 3, 1, 'Greek Life', 'http://greeklife.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(35, 3, 1, 'Student Government', 'http://msa.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(36, 3, 1, 'Center for Leadership Development', 'http://leadership.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(37, 3, 1, 'Venture Out', 'http://ventureout.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(38, 3, 1, 'Campus Activities', 'http://stufftodo.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(39, 3, 1, 'Associated Students of the University of Missouri', 'http://stufftodo.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(40, 3, 1, 'Student Design Center', 'http://www.studentdesigncenter.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(41, 3, 1, 'Student Legal Services', 'http://sls.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(42, 3, 1, 'Organizational Resource Group', 'http://getinvolved.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(43, 3, 1, 'MUTV', 'http://mutv.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(44, 4, 2, 'Adaptive Computing (N18)', 'http://doit.missouri.edu/help/adaptive.html', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(45, 4, 2, 'Asian Affairs Center (N49)', 'http://asia.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(46, 4, 2, 'Craft Studio and Art Gallery (N12)', 'http://craftstudio.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(47, 4, 2, 'The Disability Center (S5)', 'http://disabilitycenter.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(48, 4, 2, 'International Center (N52)', ' http://international.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(49, 4, 2, 'MU Veterans Center (N5)', 'http://veterans.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(50, 4, 2, 'Parent Relations (S1)' , 'http://parentrelations.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(50, 5, 2, 'Boone County National Bank ATM', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(51, 5, 2, 'Information Center', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(52, 5, 2, 'Starbucks', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(53, 5, 2, 'Tigers Credit Union ATM', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(54, 5, 2, 'Unions Events Management Office (S102)', 'http://www.unions.missouri.edu/space-reservations.php', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(55, 5, 2, 'Unions Programs Office (S106)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(56, 5, 2, 'Vending Machines', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-	(57, 5, 2, 'Wheatstone Bistro', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(58, 6, 2, 'Jack Matthews Lobby', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(59, 7, 2, 'Alumni Faculty Lounge (S304)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
-	(60, 7, 2, 'Chancellors Diversity Initiative (S303)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);  		
-	
-	
-	
+VALUES
+  (1, 1, 1, 'ID Office (G516)', 'https://doit.missouri.edu/id-cards/student.html', NULL, '2004-10-19 10:23:54', 0,
+   '2004-10-19 10:23:54', 0),
+  (2, 1, 1, 'KCOU 88.1 FM (G234)', 'http://kcou.fm/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (3, 1, 1, 'LGBTQ Resource Center (G225)', 'http://lgbtq.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (4, 1, 1, 'Maneater (G216)', 'http://www.themaneater.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (5, 1, 1, 'Multicultural Center (G107)', 'http://mizzoulife.missouri.edu/?p=747', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (6, 1, 1, 'MUTV (G228)', 'http://mutv.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (7, 1, 1, 'New Student Programs (G106)', 'http://newstudent.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (8, 1, 1, 'RSVP Office (G210)', 'http://rsvp.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (9, 1, 1, 'Student Conduct/Life (G206)', 'http://conduct.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (10, 1, 1, 'TigerTech', 'http://mubookstore.com/t-tigertech.aspx?skinid=3', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (11, 1, 1, 'Vending Machines', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (12, 1, 1, 'Wellness Resource Center', 'http://wellness.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (13, 1, 1, 'Womens Center', 'http://womenscenter.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (14, 2, 1, 'Bank of America ATM', 'http://bankofamerica.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (15, 2, 1, 'Boone County National Bank ATM', 'https://www.boonebank.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (16, 2, 1, 'MSA/GPC Box Office', 'http://boxoffice.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (17, 2, 1, 'Digiprint', 'http://ps.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (18, 2, 1, 'DoMundos Churrascaria', 'http://www.unions.missouri.edu/food_all.php#mundos', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (19, 2, 1, 'Information Center', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (20, 2, 1, 'Infusion Cafe', 'http://www.unions.missouri.edu/food_all.php#infusion', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (21, 2, 1, 'Kansas City Room (1209B)', 'http://www.unions.missouri.edu/view-room?room_id=2452', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (22, 2, 1, 'Kate and Emmas Deli', 'http://www.unions.missouri.edu/food_all.php#kate', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (23, 2, 1, 'Mizzou Market', 'http://www.unions.missouri.edu/food_all.php#mizmarket', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (24, 2, 1, 'Mizzou Pharmacy', 'http://www.muhealth.org/MizzouPharmacy', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (25, 2, 1, 'Morts Grill', 'http://www.unions.missouri.edu/food_all.php#morts', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (26, 2, 1, 'Saint Louis Room (1209A)', 'http://www.unions.missouri.edu/view-room?room_id=2451', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (27, 2, 1, 'Student Entrepreneurial Center', 'http://www.unions.missouri.edu/entrepreneurial.php', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (28, 2, 1, 'Sunshine Sushi', 'http://www.unions.missouri.edu/food_all.php#sunshine', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (29, 2, 1, 'Tigers Credit Union ATM', 'http://tigerscu.org/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (30, 2, 1, 'The Shack', 'http://www.unions.missouri.edu/space-the-shack.php', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (31, 2, 1, 'UMB Bank ATM', 'http://www.umb.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (32, 2, 1, 'The Mizzou Store', 'http://themizzoustore.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (33, 2, 1, 'US Bank', 'http://www.usbank.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (34, 3, 1, 'Greek Life', 'http://greeklife.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (35, 3, 1, 'Student Government', 'http://msa.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (36, 3, 1, 'Center for Leadership Development', 'http://leadership.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (37, 3, 1, 'Venture Out', 'http://ventureout.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (38, 3, 1, 'Campus Activities', 'http://stufftodo.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (39, 3, 1, 'Associated Students of the University of Missouri', 'http://stufftodo.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (40, 3, 1, 'Student Design Center', 'http://www.studentdesigncenter.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (41, 3, 1, 'Student Legal Services', 'http://sls.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (42, 3, 1, 'Organizational Resource Group', 'http://getinvolved.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (43, 3, 1, 'MUTV', 'http://mutv.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (44, 4, 2, 'Adaptive Computing (N18)', 'http://doit.missouri.edu/help/adaptive.html', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (45, 4, 2, 'Asian Affairs Center (N49)', 'http://asia.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (46, 4, 2, 'Craft Studio and Art Gallery (N12)', 'http://craftstudio.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (47, 4, 2, 'The Disability Center (S5)', 'http://disabilitycenter.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (48, 4, 2, 'International Center (N52)', ' http://international.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (49, 4, 2, 'MU Veterans Center (N5)', 'http://veterans.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (50, 4, 2, 'Parent Relations (S1)', 'http://parentrelations.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (50, 5, 2, 'Boone County National Bank ATM', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (51, 5, 2, 'Information Center', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (52, 5, 2, 'Starbucks', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (53, 5, 2, 'Tigers Credit Union ATM', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (54, 5, 2, 'Unions Events Management Office (S102)', 'http://www.unions.missouri.edu/space-reservations.php', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (55, 5, 2, 'Unions Programs Office (S106)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (56, 5, 2, 'Vending Machines', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (57, 5, 2, 'Wheatstone Bistro', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (58, 6, 2, 'Jack Matthews Lobby', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (59, 7, 2, 'Alumni Faculty Lounge (S304)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (60, 7, 2, 'Chancellors Diversity Initiative (S303)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
+
+
 INSERT INTO event_space (event_space_id, name, floor_id, capacity, image_path, create_time, create_user_id, update_time, update_user_id)
-	VALUES
-	--Memorial UNION
-		--1st Floor, North Wing
-		(DEFAULT, 'Bengal Lair', 1, 150, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Stotler Lounge A II', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Stotler Lounge I', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Stotler Lounge II', 1, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Stotler Lounge III', 1, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Tiger Terrace Patio', 1, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		
-		
-		--2nd Floor, North Wing
-		(DEFAULT, 'Benton Bingham Ballroom', 2, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Jane Froman', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Mark Twaint Ballroom', 2, 75, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'North 232', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Paul Christman Room', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'The Joplin/Boone Room', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Walk Disney Room', 2, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		
-		--Groud Level, South Wing
-		(DEFAULT, 'South 16', 1, 40, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		
-		--1st Floor, South Wing
-		(DEFAULT, 'The Eyler Room', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Wrench Auditorium', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'A.P. Green Chapel', 1, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		
-		--2nd Floor, South Wing
-		(DEFAULT, 'The Arvarh E. Strickland Room', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'The Gillette/Ware Room', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'The Gus T. Ridgel Room', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'The John Hiram Lathrop Room', 2, 10, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'The Todd Room', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		
-		--3rd Floor, South Wing
-		(DEFAULT, 'SUB/SUPB Room', 3, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'The Alumni Faculty Lounge', 3, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		
-	--MU Student Center
-		
-		--1st Floor
-		(DEFAULT, 'Kansas City', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Show-Me-Room', 1, 12, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'St. Louis', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'St. Louis and Kansas City', 1, 40, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'The Shack', 1, 75, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		
-		--2nd Floor
-		(DEFAULT, '2204', 2, 10, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, '2205 A', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, '2205 A&B', 2, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, '2205 B', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, '2206 A', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, '2206 B', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, '2206 C', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, '2206 A, B & C', 2, 90, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Leadership Auditorium', 2, 150, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Leadership Lounge 2nd Floor', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
-		(DEFAULT, 'Traditions Lounge', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
+VALUES
+--Memorial UNION
+  --1st Floor, North Wing
+  (DEFAULT, 'Bengal Lair', 1, 150, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Stotler Lounge A II', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Stotler Lounge I', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Stotler Lounge II', 1, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Stotler Lounge III', 1, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Tiger Terrace Patio', 1, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+
+
+--2nd Floor, North Wing
+  (DEFAULT, 'Benton Bingham Ballroom', 2, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Jane Froman', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Mark Twaint Ballroom', 2, 75, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'North 232', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Paul Christman Room', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'The Joplin/Boone Room', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Walk Disney Room', 2, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+
+--Groud Level, South Wing
+  (DEFAULT, 'South 16', 1, 40, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+
+--1st Floor, South Wing
+  (DEFAULT, 'The Eyler Room', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Wrench Auditorium', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'A.P. Green Chapel', 1, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+
+--2nd Floor, South Wing
+  (DEFAULT, 'The Arvarh E. Strickland Room', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'The Gillette/Ware Room', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'The Gus T. Ridgel Room', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'The John Hiram Lathrop Room', 2, 10, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'The Todd Room', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+
+--3rd Floor, South Wing
+  (DEFAULT, 'SUB/SUPB Room', 3, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'The Alumni Faculty Lounge', 3, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+
+--MU Student Center
+
+  --1st Floor
+  (DEFAULT, 'Kansas City', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Show-Me-Room', 1, 12, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'St. Louis', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'St. Louis and Kansas City', 1, 40, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'The Shack', 1, 75, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+
+--2nd Floor
+  (DEFAULT, '2204', 2, 10, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, '2205 A', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, '2205 A&B', 2, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, '2205 B', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, '2206 A', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, '2206 B', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, '2206 C', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, '2206 A, B & C', 2, 90, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Leadership Auditorium', 2, 150, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Leadership Lounge 2nd Floor', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+  (DEFAULT, 'Traditions Lounge', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
 		
