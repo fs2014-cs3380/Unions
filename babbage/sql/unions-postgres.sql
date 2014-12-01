@@ -86,7 +86,7 @@ CREATE TABLE event_space (
   event_space_id SERIAL      NOT NULL PRIMARY KEY,
   name           VARCHAR(45) NOT NULL,
   floor_id       INTEGER     NOT NULL REFERENCES floor,
-  capactiy       INTEGER     NOT NULL,
+  capacity       INTEGER     NOT NULL,
   /*reserved       BOOLEAN DEFAULT FALSE -- This should be checked by start and end time and not stored in the database */
   image_path     VARCHAR(100),
   create_time    TIMESTAMP,
@@ -451,3 +451,68 @@ INSERT INTO feature (feature_id, floor_id, building_id, name, url, event_space_i
 	(58, 6, 2, 'Jack Matthews Lobby', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
 	(59, 7, 2, 'Alumni Faculty Lounge (S304)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
 	(60, 7, 2, 'Chancellors Diversity Initiative (S303)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);  		
+	
+	
+	
+INSERT INTO event_space (event_space_id, name, floor_id, capacity, image_path, create_time, create_user_id, update_time, update_user_id)
+	VALUES
+	--Memorial UNION
+		--1st Floor, North Wing
+		(DEFAULT, 'Bengal Lair', 1, 150, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Stotler Lounge A II', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Stotler Lounge I', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Stotler Lounge II', 1, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Stotler Lounge III', 1, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Tiger Terrace Patio', 1, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		
+		--2nd Floor, North Wing
+		(DEFAULT, 'Benton Bingham Ballroom', 2, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Jane Froman', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Mark Twaint Ballroom', 2, 75, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'North 232', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Paul Christman Room', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Joplin/Boone Room', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Walk Disney Room', 2, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--Groud Level, South Wing
+		(DEFAULT, 'South 16', 1, 40, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--1st Floor, South Wing
+		(DEFAULT, 'The Eyler Room', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Wrench Auditorium', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'A.P. Green Chapel', 1, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--2nd Floor, South Wing
+		(DEFAULT, 'The Arvarh E. Strickland Room', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Gillette/Ware Room', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Gus T. Ridgel Room', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The John Hiram Lathrop Room', 2, 10, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Todd Room', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--3rd Floor, South Wing
+		(DEFAULT, 'SUB/SUPB Room', 3, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Alumni Faculty Lounge', 3, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+	--MU Student Center
+		
+		--1st Floor
+		(DEFAULT, 'Kansas City', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Show-Me-Room', 1, 12, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'St. Louis', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'St. Louis and Kansas City', 1, 40, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Shack', 1, 75, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--2nd Floor
+		(DEFAULT, '2204', 2, 10, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2205 A', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2205 A&B', 2, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2205 B', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2206 A', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2206 B', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2206 C', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2206 A, B & C', 2, 90, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Leadership Auditorium', 2, 150, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Leadership Lounge 2nd Floor', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Traditions Lounge', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
+		
