@@ -3,7 +3,7 @@ $authOnlyColumns = array('id', 'description_of_the_item');
 
 
 if(!empty($_SESSION)){
-	if(isset($_SESSION['auth_token']) || $_SESSION['auth_token'] == true){
+	if(isset($_SESSION['auth_token']) || @$_SESSION['auth_token'] == true){
 		$query = "SELECT item.id, item.location AS where_item_was_found, item.description as description_of_the_item, 
 		item_status.description as where_item_is_available_for_pickup, item_type.name as type_of_item, 
 		item.found_date as date_item_was_found, item_type.status as status, item.status_id as item_status

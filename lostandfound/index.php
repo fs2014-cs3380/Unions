@@ -16,7 +16,7 @@ switch($content){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Missouri Student Unions - Lost & Found</title>
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -24,20 +24,20 @@ switch($content){
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	<link rel="stylesheet" type="text/css" href="mystyle.css" />
-	
+
 	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/<?php echo $content; ?>.js"></script>
 	<script src="js/global.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	
+
 </head>
 <body>
 
 
 <div id="header" class="pad">
 	<div class="top">
-		<span class="topBanner"></span>
+		<a href="/unions"><span class="topBanner"></span></a>
 		<h1 class="pageTitle"><?php echo $title; ?></h1>
 	</div>
 
@@ -65,16 +65,16 @@ switch($content){
 					}else{
 						echo '<li><a href="#" class="navBlack" onclick="logoutRedirect();">Logout</a></li>';
 					}
-				?>	
+				?>
 				</form>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</nav>
 </div>
 
-<?php 
+<?php
 require_once('includes/claimedItemModal.php');
-include_once("includes/".$content.".inc.php"); 
+include_once("includes/".$content.".inc.php");
 
 ?>
 </body>

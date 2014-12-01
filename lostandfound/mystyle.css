@@ -420,8 +420,9 @@
 	.topBanner {
 		background: url('images/unions.jpg') ;
 		float: left;
-		width: 400px;
-		height: 100px;
+		width: 500px;
+		height: 85px;
+        background-repeat: no-repeat;
 	}
 	.top {
 		overflow-x: auto;
@@ -559,7 +560,7 @@
         font-size: 60px;
 		float: left;
 		margin-top: -5px;
-		padding-left: 200px;
+		padding-left: 150px;
 		font-weight: normal !important;
 	}
 	.custom {

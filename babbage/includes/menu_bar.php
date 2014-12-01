@@ -1,11 +1,11 @@
 				<nav>
 					<ul class="topnav">
-                        <!--<li><a href="<?php /*echo MAINDIR */ ?>">Home</a></li>-->
-						<li><a href="<?php echo MAINDIR ?>">Buildings</a></li>
+                        <li><a href="/unions/">Home</a></li>
+						<li><a href="<?php echo MAINDIR; ?>buildings/buildings_main.php">Buildings</a></li>
 						<!--<li><a href="<?php /*echo MAINDIR */?>">Login/Logout</a></li>-->
 						<li><a href="<?php echo MAINDIR ?>reservearoom/reservearoom.php">Reserve a Space</a></li>
 						<li>
-							<a href="http://argo.col.missouri.edu/lostandfound">Lost and Found</a>
+							<a href="/unions/lostandfound">Lost and Found</a>
 						</li>
 <?php
 $isAdmin = "true";

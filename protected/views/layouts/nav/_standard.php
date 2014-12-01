@@ -14,9 +14,20 @@ $this->widget(
                 'class' => 'booster.widgets.TbMenu',
                 'type' => 'navbar',
                 'items' => array(
-                    array('label' => 'Home', 'url' => '#', 'active' => true),
-                    array('label' => 'Link', 'url' => '#'),
-                    array(
+                    array('label' => 'Home', 'url'=>$this->createUrl('/')),
+                    array('label' => 'Buildings', 'url' => Yii::app()->baseUrl.'/babbage/buildings/buildings_main.php'),
+                    array('label' => 'Reserve a Space', 'url' => Yii::app()->baseUrl.'/babbage/reservearoom/reservearoom.php'),
+                    array('label' => 'Lost & Found', 'url' => Yii::app()->baseUrl.'/lostandfound/'),
+                    array('label' => 'Policies', 'url' => '#', 'items'=>array(
+                        array('label' => 'View All', 'url' => Yii::app()->baseUrl.'/babbage/policies/'),
+                        array('label' => 'Admin', 'url' => Yii::app()->baseUrl.'/babbage/policies/admin/', 'visible'=>!Yii::app()->user->isGuest),
+                    )),
+                    array('label' => 'Portal', 'url' => '#', 'items'=>array(
+                        array('label' => 'Group Name Change', 'url' => $this->createUrl('groupNameChange/create')),
+                    )),
+
+
+                    /*array(
                         'label' => 'Come Inside',
                         'url' => '#',
                         'items' => array(
@@ -76,7 +87,18 @@ $this->widget(
                             array('label' => 'Reserve a Group Study Room','url' => '#'),
                             array('label' => 'Advertising Opportunities','url' => '#'),
                         ),
-                    ),
+                    ),*/
+
+                ),
+
+            ),
+            array(
+                'class'=>'booster.widgets.TbMenu',
+                'type' => 'navbar',
+                'htmlOptions'=>array('class'=>'pull-right'),
+                'items'=>array(
+                    array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+                    array('label'=>'Logout', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                 ),
             ),
         ),

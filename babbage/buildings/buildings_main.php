@@ -3,7 +3,7 @@
 <?php
 	$mainDir = "/students/groups/cs3380f14grp18/public_html/";
 	//pull the header in
-	require $mainDir . "/includes/header.php";
+	require "../includes/header.php";
 ?>
 
 <html>
@@ -18,6 +18,6 @@
 </html>
 
 <?php
-	require $mainDir . "/includes/footer.php";
+	require "..//includes/footer.php";
 ?> 
 	
