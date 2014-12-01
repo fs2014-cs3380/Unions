@@ -86,7 +86,7 @@ CREATE TABLE event_space (
   event_space_id SERIAL      NOT NULL PRIMARY KEY,
   name           VARCHAR(45) NOT NULL,
   floor_id       INTEGER     NOT NULL REFERENCES floor,
-  capactiy       INTEGER     NOT NULL,
+  capacity       INTEGER     NOT NULL,
   /*reserved       BOOLEAN DEFAULT FALSE -- This should be checked by start and end time and not stored in the database */
   image_path     VARCHAR(100),
   create_time    TIMESTAMP,
@@ -108,13 +108,29 @@ CREATE TABLE reservation (
 
 CREATE TABLE feature (
   feature_id     SERIAL      NOT NULL,
-  name           VARCHAR(45) NOT NULL,
+  floor_id  	 INTEGER     NOT NULL REFERENCES floor,
+  building_id   INTEGER NOT NULL REFERENCES building,
+  name           VARCHAR(100) NOT NULL,
   url            VARCHAR(150),
   event_space_id INTEGER , /* NULL is allowed so no foreign key */
   create_time    TIMESTAMP,
   create_user_id INTEGER,
   update_time    TIMESTAMP,
   update_user_id INTEGER
+);
+
+CREATE TABLE attraction (
+  attraction_id SERIAL PRIMARY KEY NOT NULL,
+  name           VARCHAR(100) NOT NULL,
+  image_path VARCHAR(100),
+  lim_id INTEGER,
+  information_url VARCHAR(100),
+  url_display_name VARCHAR(60),
+  create_time TIMESTAMP, 
+  create_user_id INTEGER,
+  update_time    TIMESTAMP,
+  update_user_id INTEGER,
+  building_id    INTEGER NOT NULL REFERENCES building
 );
 /* END RESERVATION TABLES */
 
@@ -328,5 +344,161 @@ VALUES (1, 3),
   (46, 1),
   (47, 1);
 
-INSERT INTO building (name)
-VALUES ('Memorial Union', 'MU Student Center');
+INSERT INTO building (building_id, name, address, open_time, close_time, create_time, create_user_id, update_time, update_user_id)
+	VALUES 
+		(1, 'MU Student Center', '901 Rollins Rd, Columbia, MO 65211', '07:00', '24:00', '00:00', 0, '2004-10-19 10:23:54', 0),
+		(2, 'Memorial Student Union', 'Memorial Union, University of Missouri Columbia, MO 65201', '07:00', '24:00', '00:00', 0, '2004-10-19 10:23:54', 0);
+		
+INSERT INTO floor (floor_id, name, building_id, create_time, create_user_id, update_time, update_user_id)
+	VALUES 
+		(1, 'Ground Floor', 1, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(2, 'First Floor', 1,'2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(3, 'Second Floor', 1, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(4, 'Ground Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(5, 'First Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(6, 'Second Floor', 2,'2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(7, 'Third Floor', 2,'2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
+
+INSERT INTO attraction (attraction_id, name, image_path, lim_id, information_url, url_display_name, create_time, create_user_id, update_time, update_user_id, building_id)
+	VALUES 
+		(1, 'Wheatstone Bistro'		, '/attraction_images/wheatstoneBistro.jpg' , 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
+		(2, 'Starbucks Coffee'		, '/attraction_images/starbucks.png' , 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
+		(3, 'Craft Studio'		, '/attraction_images/craftstudio.jpg' , 0, 'http://craftstudio.missouri.edu/' , 'View Information', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
+		(4, 'Do Mundos Churrascaria', '/attraction_images/DoMundos.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(5, 'Infusion Cafe', '/attraction_images/Infusion.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(6, 'Kate & Emmas', '/attraction_images/KateEmmas.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(7, 'Morts Grill', '/attraction_images/morts.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(8, 'Pomodoro Pizza and Pasta' , '/attraction_images/DoMundos.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(9, 'Sunshine Sushi', '/attraction_images/sunshineSushi.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(10, 'Mizzou Market', '/attraction_images/mizMarketCentral.jpg', 0, 'http://dining.missouri.edu/places-to-eat/mizzou-market-central/' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(11, 'The Mizzou Store', '/attraction_images/MizzouStore.png', 0, 'http://themizzoustore.com/' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(12, 'TigerTech' , '/attraction_images/tigertech.png', 0, 'http://mutigertech.com/' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1);
+
+INSERT INTO feature (feature_id, floor_id, building_id, name, url, event_space_id, create_time, create_user_id, update_time, update_user_id)
+	VALUES 
+	(1, 1, 1, 'ID Office (G516)', 'https://doit.missouri.edu/id-cards/student.html', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(2, 1, 1, 'KCOU 88.1 FM (G234)', 'http://kcou.fm/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(3, 1, 1, 'LGBTQ Resource Center (G225)', 'http://lgbtq.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),  
+	(4, 1, 1, 'Maneater (G216)', 'http://www.themaneater.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(5, 1, 1, 'Multicultural Center (G107)', 'http://mizzoulife.missouri.edu/?p=747', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(6, 1, 1, 'MUTV (G228)', 'http://mutv.missouri.edu/', NULL,  '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(7, 1, 1, 'New Student Programs (G106)', 'http://newstudent.missouri.edu/', NULL,  '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(8, 1, 1, 'RSVP Office (G210)', 'http://rsvp.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(9, 1, 1, 'Student Conduct/Life (G206)', 'http://conduct.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(10, 1, 1, 'TigerTech', 'http://mubookstore.com/t-tigertech.aspx?skinid=3', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(11, 1, 1, 'Vending Machines', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(12, 1, 1, 'Wellness Resource Center', 'http://wellness.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(13, 1, 1, 'Womens Center', 'http://womenscenter.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(14, 2, 1, 'Bank of America ATM', 'http://bankofamerica.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(15, 2, 1, 'Boone County National Bank ATM' , 'https://www.boonebank.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(16, 2, 1, 'MSA/GPC Box Office', 'http://boxoffice.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(17, 2, 1, 'Digiprint', 'http://ps.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(18, 2, 1, 'DoMundos Churrascaria', 'http://www.unions.missouri.edu/food_all.php#mundos', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(19, 2, 1, 'Information Center', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(20, 2, 1, 'Infusion Cafe', 'http://www.unions.missouri.edu/food_all.php#infusion', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(21, 2, 1, 'Kansas City Room (1209B)', 'http://www.unions.missouri.edu/view-room?room_id=2452', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(22, 2, 1, 'Kate and Emmas Deli', 'http://www.unions.missouri.edu/food_all.php#kate', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(23, 2, 1, 'Mizzou Market', 'http://www.unions.missouri.edu/food_all.php#mizmarket', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(24, 2, 1, 'Mizzou Pharmacy', 'http://www.muhealth.org/MizzouPharmacy', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(25, 2, 1, 'Morts Grill', 'http://www.unions.missouri.edu/food_all.php#morts', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(26, 2, 1, 'Saint Louis Room (1209A)', 'http://www.unions.missouri.edu/view-room?room_id=2451', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(27, 2, 1, 'Student Entrepreneurial Center', 'http://www.unions.missouri.edu/entrepreneurial.php',  NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(28, 2, 1, 'Sunshine Sushi', 'http://www.unions.missouri.edu/food_all.php#sunshine', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(29, 2, 1, 'Tigers Credit Union ATM', 'http://tigerscu.org/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(30, 2, 1, 'The Shack', 'http://www.unions.missouri.edu/space-the-shack.php', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(31, 2, 1, 'UMB Bank ATM', 'http://www.umb.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(32, 2, 1, 'The Mizzou Store', 'http://themizzoustore.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(33, 2, 1, 'US Bank', 'http://www.usbank.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(34, 3, 1, 'Greek Life', 'http://greeklife.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(35, 3, 1, 'Student Government', 'http://msa.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(36, 3, 1, 'Center for Leadership Development', 'http://leadership.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(37, 3, 1, 'Venture Out', 'http://ventureout.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(38, 3, 1, 'Campus Activities', 'http://stufftodo.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(39, 3, 1, 'Associated Students of the University of Missouri', 'http://stufftodo.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(40, 3, 1, 'Student Design Center', 'http://www.studentdesigncenter.com/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(41, 3, 1, 'Student Legal Services', 'http://sls.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(42, 3, 1, 'Organizational Resource Group', 'http://getinvolved.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(43, 3, 1, 'MUTV', 'http://mutv.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(44, 4, 2, 'Adaptive Computing (N18)', 'http://doit.missouri.edu/help/adaptive.html', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(45, 4, 2, 'Asian Affairs Center (N49)', 'http://asia.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(46, 4, 2, 'Craft Studio and Art Gallery (N12)', 'http://craftstudio.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(47, 4, 2, 'The Disability Center (S5)', 'http://disabilitycenter.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(48, 4, 2, 'International Center (N52)', ' http://international.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(49, 4, 2, 'MU Veterans Center (N5)', 'http://veterans.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(50, 4, 2, 'Parent Relations (S1)' , 'http://parentrelations.missouri.edu/', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(50, 5, 2, 'Boone County National Bank ATM', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(51, 5, 2, 'Information Center', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(52, 5, 2, 'Starbucks', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(53, 5, 2, 'Tigers Credit Union ATM', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(54, 5, 2, 'Unions Events Management Office (S102)', 'http://www.unions.missouri.edu/space-reservations.php', NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(55, 5, 2, 'Unions Programs Office (S106)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(56, 5, 2, 'Vending Machines', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+	(57, 5, 2, 'Wheatstone Bistro', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(58, 6, 2, 'Jack Matthews Lobby', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(59, 7, 2, 'Alumni Faculty Lounge (S304)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0), 
+	(60, 7, 2, 'Chancellors Diversity Initiative (S303)', NULL, NULL, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);  		
+	
+	
+	
+INSERT INTO event_space (event_space_id, name, floor_id, capacity, image_path, create_time, create_user_id, update_time, update_user_id)
+	VALUES
+	--Memorial UNION
+		--1st Floor, North Wing
+		(DEFAULT, 'Bengal Lair', 1, 150, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Stotler Lounge A II', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Stotler Lounge I', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Stotler Lounge II', 1, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Stotler Lounge III', 1, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Tiger Terrace Patio', 1, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		
+		--2nd Floor, North Wing
+		(DEFAULT, 'Benton Bingham Ballroom', 2, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Jane Froman', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Mark Twaint Ballroom', 2, 75, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'North 232', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Paul Christman Room', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Joplin/Boone Room', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Walk Disney Room', 2, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--Groud Level, South Wing
+		(DEFAULT, 'South 16', 1, 40, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--1st Floor, South Wing
+		(DEFAULT, 'The Eyler Room', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Wrench Auditorium', 1, 100, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'A.P. Green Chapel', 1, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--2nd Floor, South Wing
+		(DEFAULT, 'The Arvarh E. Strickland Room', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Gillette/Ware Room', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Gus T. Ridgel Room', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The John Hiram Lathrop Room', 2, 10, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Todd Room', 2, 15, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--3rd Floor, South Wing
+		(DEFAULT, 'SUB/SUPB Room', 3, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Alumni Faculty Lounge', 3, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+	--MU Student Center
+		
+		--1st Floor
+		(DEFAULT, 'Kansas City', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Show-Me-Room', 1, 12, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'St. Louis', 1, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'St. Louis and Kansas City', 1, 40, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'The Shack', 1, 75, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		
+		--2nd Floor
+		(DEFAULT, '2204', 2, 10, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2205 A', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2205 A&B', 2, 50, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2205 B', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2206 A', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2206 B', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2206 C', 2, 30, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, '2206 A, B & C', 2, 90, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Leadership Auditorium', 2, 150, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Leadership Lounge 2nd Floor', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(DEFAULT, 'Traditions Lounge', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
+		
