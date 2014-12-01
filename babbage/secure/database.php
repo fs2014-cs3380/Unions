@@ -1,3 +1,3 @@
 <?php 
-DEFINE("CONNSTRING", "host=localhost dbname=group18 user=pcpopper password=Dragon1!");
+DEFINE("CONNSTRING", "host=localhost dbname=postgres user=unions password=iVIOwk*ivx");
 ?>

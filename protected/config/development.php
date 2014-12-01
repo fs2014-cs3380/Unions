@@ -20,8 +20,8 @@ return array(
         'db'=>array(
             'connectionString' => 'pgsql:host=127.0.0.1;dbname=postgres',
             'emulatePrepare' => true,
-            'username' => 'postgres',
-            'password' => 'cr1125-a',
+            'username' => 'unions',
+            'password' => 'iVIOwk*ivx',
             'charset' => 'utf8',
         ),
 

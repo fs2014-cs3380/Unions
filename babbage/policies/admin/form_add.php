@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 				customError("There was an error adding \"" . htmlspecialchars($_POST['tag']) . "\": HTML and SQL injection is not allowed.");
 			}
 			
-			$result = pg_prepare($dbconn, "insert", 'INSERT INTO tags(tag) VALUES ($1)');
+			$result = pg_prepare($dbconn, "insert", 'INSERT INTO tag(tag) VALUES ($1)');
 			$result = pg_execute($dbconn, "insert", array(htmlspecialchars($_POST['tag'])));
 			if (!$result) {
 				customError('Query failed.');
@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
 			echo "\t\t\t\t<label for=\"tags\" style=\"width: 100px; display:block; float:left;\">Tags</div></label>\n";
 			echo "\t\t\t\t<select name=\"tags[]\" multiple size=\"10\">\n";
 			
-			$tags_query = "SELECT tag_id, tag FROM tags ORDER BY tag ASC";
+			$tags_query = "SELECT tag_id, tag FROM tag ORDER BY tag ASC";
 			$tags_result = pg_query($tags_query);
 			if (!$tags_result) {
 				customError('Query failed.');

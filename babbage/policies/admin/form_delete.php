@@ -7,7 +7,7 @@ switch (TYPE) {
 		$result = pg_prepare($dbconn, "delete", 'DELETE FROM policy WHERE policy_id = $1');
 		break;
 	case "Tag":
-		$result = pg_prepare($dbconn, "delete", 'DELETE FROM tags WHERE tag_id = $1');
+		$result = pg_prepare($dbconn, "delete", 'DELETE FROM tag WHERE tag_id = $1');
 		break;
 }
 $result = pg_execute($dbconn, "delete", array($_GET['id']));

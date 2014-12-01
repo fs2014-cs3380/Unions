@@ -40,7 +40,7 @@ CREATE TABLE policy (
   policy_id      SERIAL  NOT NULL PRIMARY KEY,
   title          TEXT    NOT NULL,
   text           TEXT    NOT NULL,
-  category_id    INTEGER NOT NULL REFERENCES category ON DELETE NO ACTION,
+  category_id    INTEGER NOT NULL REFERENCES category ON DELETE CASCADE ON UPDATE CASCADE,
   create_time    TIMESTAMP,
   create_user_id INTEGER,
   update_time    TIMESTAMP,

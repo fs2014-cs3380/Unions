@@ -21,7 +21,7 @@ while ($result_line = pg_fetch_array($result, null, PGSQL_BOTH)) {
 	$policies[$result_line[0]] = $result_line[1];
 }
 
-$query = "SELECT tag_id, tag FROM tags ORDER BY tag ASC";
+$query = "SELECT tag_id, tag FROM tag ORDER BY tag ASC";
 $result = pg_query($query);
 if (!$result) {
 	customError('Query failed.');
