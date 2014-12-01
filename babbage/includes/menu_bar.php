@@ -5,11 +5,7 @@
 						<li><a href="<?php echo MAINDIR ?>">Login/Logout</a></li>
 						<li><a href="<?php echo MAINDIR ?>reservearoom/reservearoom.php">Reserve a Space</a></li>
 						<li>
-							<a href="<?php echo MAINDIR ?>lostandfound/lostandfound.php">Lost and Found</a>
-							<ul class="subnav">
-								<li><a href="<?php echo MAINDIR ?>lostandfound/new.php">Lost Something?</a></li>
-								<li><a href="<?php echo MAINDIR ?>lostandfound/update.php">Update Existing Item</a></li>
-							</ul>
+							<a href="http://argo.col.missouri.edu/lostandfound">Lost and Found</a>
 						</li>
 <?php
 $isAdmin = "true";
