@@ -116,6 +116,20 @@ CREATE TABLE feature (
   update_time    TIMESTAMP,
   update_user_id INTEGER
 );
+
+CREATE TABLE attraction (
+  attraction_id SERIAL PRIMARY KEY NOT NULL,
+  name           VARCHAR(100) NOT NULL,
+  image_path VARCHAR(100),
+  lim_id INTEGER,
+  information_url VARCHAR(100),
+  url_display_name VARCHAR(60),
+  create_time TIMESTAMP, 
+  create_user_id INTEGER,
+  update_time    TIMESTAMP,
+  update_user_id INTEGER,
+  building_id    INTEGER NOT NULL REFERENCES building
+);
 /* END RESERVATION TABLES */
 
 /* LOST & FOUND TABLES */
@@ -342,5 +356,23 @@ VALUES (1, 3),
   (46, 1),
   (47, 1);
 
-INSERT INTO building (name)
-VALUES ('Memorial Union', 'MU Student Center');
+INSERT INTO building (building_id, name, address, open_time, close_time, create_time, create_user_id, update_time, update_user_id)
+	VALUES 
+		(1, 'MU Student Center', '901 Rollins Rd, Columbia, MO 65211', '07:00', '24:00', '00:00', 0, '2004-10-19 10:23:54', 0),
+		(2, 'Memorial Student Union', 'Memorial Union, University of Missouri Columbia, MO 65201', '07:00', '24:00', '00:00', 0, '2004-10-19 10:23:54', 0);
+		
+INSERT INTO attraction (attraction_id, name, image_path, lim_id, information_url, url_display_name, create_time, create_user_id, update_time, update_user_id, building_id)
+	VALUES 
+		(1, 'Wheatstone Bistro'		, '/attraction_images/wheatstoneBistro.jpg' , 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
+		(2, 'Starbucks Coffee'		, '/attraction_images/starbucks.png' , 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
+		(3, 'Craft Studio'		, '/attraction_images/craftstudio.jpg' , 0, 'http://craftstudio.missouri.edu/' , 'View Information', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
+		(4, 'Do Mundos Churrascaria', '/attraction_images/DoMundos.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(5, 'Infusion Cafe', '/attraction_images/Infusion.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(6, 'Kate & Emmas', '/attraction_images/KateEmmas.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(7, 'Morts Grill', '/attraction_images/morts.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(8, 'Pomodoro Pizza and Pasta' , '/attraction_images/DoMundos.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(9, 'Sunshine Sushi', '/attraction_images/sunshineSushi.jpg', 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(10, 'Mizzou Market', '/attraction_images/mizMarketCentral.jpg', 0, 'http://dining.missouri.edu/places-to-eat/mizzou-market-central/' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(11, 'The Mizzou Store', '/attraction_images/MizzouStore.png', 0, 'http://themizzoustore.com/' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1),
+		(12, 'TigerTech' , '/attraction_images/tigertech.png', 0, 'http://mutigertech.com/' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 1);
+		
