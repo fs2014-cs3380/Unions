@@ -361,6 +361,16 @@ INSERT INTO building (building_id, name, address, open_time, close_time, create_
 		(1, 'MU Student Center', '901 Rollins Rd, Columbia, MO 65211', '07:00', '24:00', '00:00', 0, '2004-10-19 10:23:54', 0),
 		(2, 'Memorial Student Union', 'Memorial Union, University of Missouri Columbia, MO 65201', '07:00', '24:00', '00:00', 0, '2004-10-19 10:23:54', 0);
 		
+INSERT INTO floor (floor_id, name, building_id, create_time, create_user_id, update_time, update_user_id)
+	VALUES 
+		(1, 'Ground Floor', 1, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(2, 'First Floor', 1,'2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(3, 'Second Floor', 1, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(4, 'Ground Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(5, 'First Floor', 2, '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(6, 'Second Floor', 2,'2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
+		(7, 'Third Floor', 2,'2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
+
 INSERT INTO attraction (attraction_id, name, image_path, lim_id, information_url, url_display_name, create_time, create_user_id, update_time, update_user_id, building_id)
 	VALUES 
 		(1, 'Wheatstone Bistro'		, '/attraction_images/wheatstoneBistro.jpg' , 0, 'http://dining.missouri.edu/hours' , 'View Hours', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0, 2),
