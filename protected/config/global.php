@@ -37,6 +37,15 @@ return array(
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
+
+        'db_ems'=>array(
+            'connectionString' => 'sqlsrv:server=argo.col.missouri.edu;Database=EMS_Staging',
+            'username' => 'unions',
+            'password' => 'iVIOwk*ivx',
+            'charset' => 'utf8',
+            'class' => 'CDbConnection'
+        ),
+
 		'errorHandler'=>array(
 			'errorAction'=>'site/error',
 		),

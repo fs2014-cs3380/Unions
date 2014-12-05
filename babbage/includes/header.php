@@ -9,7 +9,7 @@ DEFINE("MAINDIR", "/unions/babbage/");
 $mainDir = "C:/xampp/htdocs/unions/babbage/";
 //$mainDir = "/Users/pcpopper/Unions/babbage/";
 
-require_once $mainDir . '/secure/database.php';
+require_once $mainDir . 'secure/database.php';
 
 function customError($e) {
 ?>

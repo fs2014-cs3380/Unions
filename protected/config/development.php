@@ -25,14 +25,6 @@ return array(
             'charset' => 'utf8',
         ),
 
-        'db_ems'=>array(
-            'connectionString' => 'sqlsrv:server=argo.col.missouri.edu;Database=EMS_Staging',
-            'username' => 'unions',
-            'password' => 'iVIOwk*ivx',
-            'charset' => 'utf8',
-            'class' => 'CDbConnection'
-        ),
-
         'session'=>array(
             /*'cookieMode'=>'only',
             'sessionName'=>'UM-SAS-Unions',
