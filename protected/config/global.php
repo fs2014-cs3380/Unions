@@ -39,7 +39,7 @@ return array(
 		),
 
         'db_ems'=>array(
-            'connectionString' => 'sqlsrv:server=argo.col.missouri.edu;Database=EMS_Staging',
+            'connectionString' => 'sqlsrv:server=maverick.col.missouri.edu;Database=EMS_Staging',
             'username' => 'unions',
             'password' => 'iVIOwk*ivx',
             'charset' => 'utf8',
