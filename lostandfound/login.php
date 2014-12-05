@@ -19,10 +19,9 @@ function getLDAPVal($value, $entry, $return_array=false){
 
     return $return_array ? $values : $values[0];
 }
-if(isset($_SESSION['auth_token']) && $_SESSION['auth_token'] == true){
+if(isset($_SESSION['auth_token']) && $_SESSION['auth_token'] == true)
 	header("Location: view.php");
-	break;
-}
+
 if(isset($_POST['auth_submit']) && !empty($_POST['username']) && $_POST['auth_submit'] == 'Login'){
 	$connection = ldap_connect(HOST, PORT);
 	$username = $_POST['username'];
