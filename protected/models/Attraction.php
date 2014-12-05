@@ -1,34 +1,32 @@
 <?php
 
 /**
- * This is the model class for table "unions.item".
+ * This is the model class for table "unions.attraction".
  *
- * The followings are the available columns in table 'unions.item':
- * @property integer $item_id
- * @property string $location
- * @property string $description
- * @property string $found_user_email
- * @property string $found_date
- * @property integer $item_type_id
- * @property integer $item_status_id
+ * The followings are the available columns in table 'unions.attraction':
+ * @property integer $attraction_id
+ * @property string $name
+ * @property string $image_path
+ * @property integer $lim_id
+ * @property string $information_url
+ * @property string $url_display_name
  * @property string $create_time
  * @property integer $create_user_id
  * @property string $update_time
  * @property integer $update_user_id
+ * @property integer $building_id
  *
  * The followings are the available model relations:
- * @property ItemType $itemType
- * @property ItemStatus $itemStatus
- * @property User[] $users
+ * @property Building $building
  */
-class Item extends UActiveRecord
+class Attraction extends UActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'unions.item';
+		return 'unions.attraction';
 	}
 
 	/**
@@ -39,14 +37,14 @@ class Item extends UActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('item_id, location, description, found_user_email, found_date, item_type_id, item_status_id', 'required'),
-			array('item_id, item_type_id, item_status_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
-			array('location', 'length', 'max'=>255),
-			array('found_user_email', 'length', 'max'=>100),
+			array('name, building_id', 'required'),
+			array('lim_id, create_user_id, update_user_id, building_id', 'numerical', 'integerOnly'=>true),
+			array('name, image_path, information_url', 'length', 'max'=>100),
+			array('url_display_name', 'length', 'max'=>60),
 			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('item_id, location, description, found_user_email, found_date, item_type_id, item_status_id, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
+			array('attraction_id, name, image_path, lim_id, information_url, url_display_name, create_time, create_user_id, update_time, update_user_id, building_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,9 +56,7 @@ class Item extends UActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'itemType' => array(self::BELONGS_TO, 'ItemType', 'item_type_id'),
-			'itemStatus' => array(self::BELONGS_TO, 'ItemStatus', 'item_status_id'),
-			'users' => array(self::MANY_MANY, 'User', 'item_claim(item_id, user_id)'),
+			'building' => array(self::BELONGS_TO, 'Building', 'building_id'),
 		);
 	}
 
@@ -70,17 +66,17 @@ class Item extends UActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'item_id' => 'Item',
-			'location' => 'Location',
-			'description' => 'Description',
-			'found_user_email' => 'Found User Email',
-			'found_date' => 'Found Date',
-			'item_type_id' => 'Item Type',
-			'item_status_id' => 'Item Status',
+			'attraction_id' => 'Attraction',
+			'name' => 'Name',
+			'image_path' => 'Image Path',
+			'lim_id' => 'Lim',
+			'information_url' => 'Information Url',
+			'url_display_name' => 'Url Display Name',
 			'create_time' => 'Create Time',
 			'create_user_id' => 'Create User',
 			'update_time' => 'Update Time',
 			'update_user_id' => 'Update User',
+			'building_id' => 'Building',
 		);
 	}
 
@@ -102,17 +98,17 @@ class Item extends UActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('item_id',$this->item_id);
-		$criteria->compare('location',$this->location,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('found_user_email',$this->found_user_email,true);
-		$criteria->compare('found_date',$this->found_date,true);
-		$criteria->compare('item_type_id',$this->item_type_id);
-		$criteria->compare('item_status_id',$this->item_status_id);
+		$criteria->compare('attraction_id',$this->attraction_id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('image_path',$this->image_path,true);
+		$criteria->compare('lim_id',$this->lim_id);
+		$criteria->compare('information_url',$this->information_url,true);
+		$criteria->compare('url_display_name',$this->url_display_name,true);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('create_user_id',$this->create_user_id);
 		$criteria->compare('update_time',$this->update_time,true);
 		$criteria->compare('update_user_id',$this->update_user_id);
+		$criteria->compare('building_id',$this->building_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -123,7 +119,7 @@ class Item extends UActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Item the static model class
+	 * @return Attraction the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

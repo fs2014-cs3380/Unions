@@ -14,6 +14,7 @@
  *
  * The followings are the available model relations:
  * @property EventSpace[] $eventSpaces
+ * @property Feature[] $features
  * @property Building $building
  */
 class Floor extends UActiveRecord
@@ -53,6 +54,7 @@ class Floor extends UActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'eventSpaces' => array(self::HAS_MANY, 'EventSpace', 'floor_id'),
+			'features' => array(self::HAS_MANY, 'Feature', 'floor_id'),
 			'building' => array(self::BELONGS_TO, 'Building', 'building_id'),
 		);
 	}

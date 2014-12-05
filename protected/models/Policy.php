@@ -14,8 +14,8 @@
  * @property integer $update_user_id
  *
  * The followings are the available model relations:
- * @property Tagged[] $taggeds
  * @property Category $category
+ * @property Tagged[] $taggeds
  */
 class Policy extends UActiveRecord
 {
@@ -52,8 +52,8 @@ class Policy extends UActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'taggeds' => array(self::HAS_MANY, 'Tagged', 'policy_id'),
 			'category' => array(self::BELONGS_TO, 'Category', 'category_id'),
+			'taggeds' => array(self::HAS_MANY, 'Tagged', 'policy_id'),
 		);
 	}
 

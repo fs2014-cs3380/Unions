@@ -7,7 +7,7 @@
  * @property integer $event_space_id
  * @property string $name
  * @property integer $floor_id
- * @property integer $capactiy
+ * @property integer $capacity
  * @property string $image_path
  * @property string $create_time
  * @property integer $create_user_id
@@ -36,14 +36,14 @@ class EventSpace extends UActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, floor_id, capactiy', 'required'),
-			array('floor_id, capactiy, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
+			array('name, floor_id, capacity', 'required'),
+			array('floor_id, capacity, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
 			array('image_path', 'length', 'max'=>100),
 			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('event_space_id, name, floor_id, capactiy, image_path, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
+			array('event_space_id, name, floor_id, capacity, image_path, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,7 +69,7 @@ class EventSpace extends UActiveRecord
 			'event_space_id' => 'Event Space',
 			'name' => 'Name',
 			'floor_id' => 'Floor',
-			'capactiy' => 'Capactiy',
+			'capacity' => 'Capacity',
 			'image_path' => 'Image Path',
 			'create_time' => 'Create Time',
 			'create_user_id' => 'Create User',
@@ -99,7 +99,7 @@ class EventSpace extends UActiveRecord
 		$criteria->compare('event_space_id',$this->event_space_id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('floor_id',$this->floor_id);
-		$criteria->compare('capactiy',$this->capactiy);
+		$criteria->compare('capacity',$this->capacity);
 		$criteria->compare('image_path',$this->image_path,true);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('create_user_id',$this->create_user_id);

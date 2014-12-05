@@ -15,6 +15,8 @@
  * @property integer $update_user_id
  *
  * The followings are the available model relations:
+ * @property Attraction[] $attractions
+ * @property Feature[] $features
  * @property Floor[] $floors
  */
 class Building extends UActiveRecord
@@ -35,11 +37,11 @@ class Building extends UActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, address, open_time, close_time', 'required'),
+			array('name', 'required'),
 			array('create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>60),
 			array('address', 'length', 'max'=>100),
-			array('create_time, update_time', 'safe'),
+			array('open_time, close_time, create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('building_id, name, address, open_time, close_time, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
@@ -54,6 +56,8 @@ class Building extends UActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'attractions' => array(self::HAS_MANY, 'Attraction', 'building_id'),
+			'features' => array(self::HAS_MANY, 'Feature', 'building_id'),
 			'floors' => array(self::HAS_MANY, 'Floor', 'building_id'),
 		);
 	}

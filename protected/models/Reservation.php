@@ -1,34 +1,31 @@
 <?php
 
 /**
- * This is the model class for table "unions.item".
+ * This is the model class for table "unions.reservation".
  *
- * The followings are the available columns in table 'unions.item':
- * @property integer $item_id
- * @property string $location
- * @property string $description
- * @property string $found_user_email
- * @property string $found_date
- * @property integer $item_type_id
- * @property integer $item_status_id
+ * The followings are the available columns in table 'unions.reservation':
+ * @property integer $reservation_id
+ * @property integer $event_space_id
+ * @property integer $user_id
+ * @property string $start_time
+ * @property string $end_time
  * @property string $create_time
  * @property integer $create_user_id
  * @property string $update_time
  * @property integer $update_user_id
  *
  * The followings are the available model relations:
- * @property ItemType $itemType
- * @property ItemStatus $itemStatus
- * @property User[] $users
+ * @property EventSpace $eventSpace
+ * @property User $user
  */
-class Item extends UActiveRecord
+class Reservation extends UActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'unions.item';
+		return 'unions.reservation';
 	}
 
 	/**
@@ -39,14 +36,12 @@ class Item extends UActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('item_id, location, description, found_user_email, found_date, item_type_id, item_status_id', 'required'),
-			array('item_id, item_type_id, item_status_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
-			array('location', 'length', 'max'=>255),
-			array('found_user_email', 'length', 'max'=>100),
+			array('reservation_id, event_space_id, user_id, start_time, end_time', 'required'),
+			array('reservation_id, event_space_id, user_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
 			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('item_id, location, description, found_user_email, found_date, item_type_id, item_status_id, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
+			array('reservation_id, event_space_id, user_id, start_time, end_time, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,9 +53,8 @@ class Item extends UActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'itemType' => array(self::BELONGS_TO, 'ItemType', 'item_type_id'),
-			'itemStatus' => array(self::BELONGS_TO, 'ItemStatus', 'item_status_id'),
-			'users' => array(self::MANY_MANY, 'User', 'item_claim(item_id, user_id)'),
+			'eventSpace' => array(self::BELONGS_TO, 'EventSpace', 'event_space_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -70,13 +64,11 @@ class Item extends UActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'item_id' => 'Item',
-			'location' => 'Location',
-			'description' => 'Description',
-			'found_user_email' => 'Found User Email',
-			'found_date' => 'Found Date',
-			'item_type_id' => 'Item Type',
-			'item_status_id' => 'Item Status',
+			'reservation_id' => 'Reservation',
+			'event_space_id' => 'Event Space',
+			'user_id' => 'User',
+			'start_time' => 'Start Time',
+			'end_time' => 'End Time',
 			'create_time' => 'Create Time',
 			'create_user_id' => 'Create User',
 			'update_time' => 'Update Time',
@@ -102,13 +94,11 @@ class Item extends UActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('item_id',$this->item_id);
-		$criteria->compare('location',$this->location,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('found_user_email',$this->found_user_email,true);
-		$criteria->compare('found_date',$this->found_date,true);
-		$criteria->compare('item_type_id',$this->item_type_id);
-		$criteria->compare('item_status_id',$this->item_status_id);
+		$criteria->compare('reservation_id',$this->reservation_id);
+		$criteria->compare('event_space_id',$this->event_space_id);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('start_time',$this->start_time,true);
+		$criteria->compare('end_time',$this->end_time,true);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('create_user_id',$this->create_user_id);
 		$criteria->compare('update_time',$this->update_time,true);
@@ -123,7 +113,7 @@ class Item extends UActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Item the static model class
+	 * @return Reservation the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

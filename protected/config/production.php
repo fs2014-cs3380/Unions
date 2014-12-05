@@ -8,9 +8,10 @@ return array(
         ),
 
         'db'=>array(
-            'connectionString' => 'sqlsrv:server=sql2008.col.missouri.edu; Database=musasapp;',
-            'username' => 'musasapp',
-            'password' => 'Br23uSg?17f',
+            'connectionString' => 'pgsql:host=127.0.0.1;dbname=postgres',
+            'emulatePrepare' => true,
+            'username' => 'unions',
+            'password' => 'iVIOwk*ivx',
             'charset' => 'utf8',
         ),
 

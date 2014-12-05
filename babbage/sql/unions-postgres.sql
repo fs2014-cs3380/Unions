@@ -96,6 +96,7 @@ CREATE TABLE event_space (
 );
 
 CREATE TABLE reservation (
+  reservation_id INTEGER   NOT NULL PRIMARY KEY,
   event_space_id INTEGER   NOT NULL REFERENCES event_space,
   user_id        INTEGER   NOT NULL REFERENCES "user",
   start_time     TIMESTAMP NOT NULL, --want to make unique

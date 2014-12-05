@@ -5,6 +5,8 @@
  *
  * The followings are the available columns in table 'unions.feature':
  * @property integer $feature_id
+ * @property integer $floor_id
+ * @property integer $building_id
  * @property string $name
  * @property string $url
  * @property integer $event_space_id
@@ -12,6 +14,10 @@
  * @property integer $create_user_id
  * @property string $update_time
  * @property integer $update_user_id
+ *
+ * The followings are the available model relations:
+ * @property Floor $floor
+ * @property Building $building
  */
 class Feature extends UActiveRecord
 {
@@ -31,14 +37,14 @@ class Feature extends UActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'required'),
-			array('event_space_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>45),
+			array('floor_id, building_id, name', 'required'),
+			array('floor_id, building_id, event_space_id, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>100),
 			array('url', 'length', 'max'=>150),
 			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('feature_id, name, url, event_space_id, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
+			array('feature_id, floor_id, building_id, name, url, event_space_id, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,6 +56,8 @@ class Feature extends UActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'floor' => array(self::BELONGS_TO, 'Floor', 'floor_id'),
+			'building' => array(self::BELONGS_TO, 'Building', 'building_id'),
 		);
 	}
 
@@ -60,6 +68,8 @@ class Feature extends UActiveRecord
 	{
 		return array(
 			'feature_id' => 'Feature',
+			'floor_id' => 'Floor',
+			'building_id' => 'Building',
 			'name' => 'Name',
 			'url' => 'Url',
 			'event_space_id' => 'Event Space',
@@ -89,6 +99,8 @@ class Feature extends UActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('feature_id',$this->feature_id);
+		$criteria->compare('floor_id',$this->floor_id);
+		$criteria->compare('building_id',$this->building_id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('url',$this->url,true);
 		$criteria->compare('event_space_id',$this->event_space_id);
