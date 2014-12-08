@@ -24,9 +24,28 @@ class User extends UActiveRecord
 
     public $password;
     public $password_repeat;
+    public $first_name;
+    public $last_name;
+    public $personal_info = array();
+
+    public function beforeSave(){
+        if(empty($this->first_name))
+            $this->personal_info = NULL;
+        else {
+            $this->personal_info['first_name'] = $this->first_name;
+            $this->personal_info['last_name'] = $this->last_name;
+            $this->personal_info = json_encode($this->personal_info);
+        }
+
+        return parent::beforeSave();
+
+    }
 
     protected function afterSave()
     {
+        if(is_null($this->password))
+            return parent::afterSave();
+
         if ($this->isNewRecord)
             $auth = new UserAuth();
         else

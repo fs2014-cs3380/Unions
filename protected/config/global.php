@@ -65,5 +65,11 @@ return array(
 	),
 
 	// using Yii::app()->params['paramName']
-	'params'=>array(),
+	'params'=>array(
+        'ldap' => array(
+            'basedn'    => 'dc=col, dc=missouri, dc=edu',
+            'host'      => 'ldap.missouri.edu',
+            'port'		=> '3268' //Will allow every domain in the forest
+        ),
+    ),
 );
