@@ -41,6 +41,7 @@ CREATE TABLE policy (
   title          TEXT    NOT NULL,
   text           TEXT    NOT NULL,
   category_id    INTEGER NOT NULL REFERENCES category ON DELETE CASCADE ON UPDATE CASCADE,
+  active         BOOL DEFAULT TRUE,
   create_time    TIMESTAMP,
   create_user_id INTEGER,
   update_time    TIMESTAMP,
