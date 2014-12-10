@@ -174,10 +174,19 @@ class ItemController extends Controller
             array(
                 'class' => 'booster.widgets.TbMenu',
                 'type' => 'navbar',
+                'htmlOptions' => array('style' => 'padding-right: 10px; border-right: 2px solid #F1B82D'),
                 'items' => array(
-                    array('label' => 'Add Item', 'url' => array('create'), 'active' => true),
-                    array('label' => 'Show Claimed Items', 'url' => array('claimed'), 'active' => true),
-                    array('label' => 'Show Pending Items', 'url' => array('pending'), 'active' => true),
+                    array('label' => 'Back to Main', 'url' => array('/')),
+                ),
+            ),
+            array(
+                'class' => 'booster.widgets.TbMenu',
+                'type' => 'navbar',
+                'htmlOptions' => array('class' =>'pull-right'),
+                'items' => array(
+                    array('label' => 'Add Item', 'url' => array('create')),
+                    array('label' => 'Show Claimed Items', 'url' => array('claimed')),
+                    array('label' => 'Show Pending Items', 'url' => array('pending')),
 
                 )
             )
