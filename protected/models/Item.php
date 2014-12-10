@@ -23,7 +23,7 @@ class Item extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'item';
+		return 'unions.item';
 	}
 
 	/**

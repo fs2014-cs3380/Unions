@@ -7,7 +7,6 @@ class ItemController extends Controller
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
     public $layout = '//layouts/column1';
-    public $navbar = '//layouts/nav/_lostandfound';
 
     /**
      * @return array action filters
@@ -168,5 +167,20 @@ class ItemController extends Controller
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+
+    public function setNavbar(){
+        $this->navbar = array(
+            array(
+                'class' => 'booster.widgets.TbMenu',
+                'type' => 'navbar',
+                'items' => array(
+                    array('label' => 'Add Item', 'url' => array('create'), 'active' => true),
+                    array('label' => 'Show Claimed Items', 'url' => array('claimed'), 'active' => true),
+                    array('label' => 'Show Pending Items', 'url' => array('pending'), 'active' => true),
+
+                )
+            )
+        );
     }
 }
