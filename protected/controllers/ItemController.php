@@ -168,8 +168,4 @@ class ItemController extends Controller
             Yii::app()->end();
         }
     }
-
-    public function actionLostAndFound(){
-        $this->render('item');
-    }
 }

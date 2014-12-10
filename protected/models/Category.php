@@ -87,12 +87,7 @@ class Category extends UActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('category_id',$this->category_id);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('create_user_id',$this->create_user_id);
-		$criteria->compare('update_time',$this->update_time,true);
-		$criteria->compare('update_user_id',$this->update_user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

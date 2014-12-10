@@ -1,7 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Allen
- * Date: 12/8/14
- * Time: 9:16 AM
- */ 
+$this->widget(
+    'booster.widgets.TbExtendedGridView',
+    array(
+        'headerOffset' => 30,
+        // 40px is the height of the main navigation at bootstrap
+        'type' => 'striped',
+        'dataProvider' => $categories->search(),
+        'filter'=>$categories,
+        'template' => "{items}{pager}",
+        'columns' => array(
+            'name',
+            array(
+                'class'=>'booster.widgets.TbButtonColumn',
+            ),
+        ),
+    )
+);

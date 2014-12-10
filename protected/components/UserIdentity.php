@@ -60,14 +60,13 @@ class UserIdentity extends CUserIdentity
                     $user = User::model()->findByAttributes(array('email_address' => $email_address));
                     if (is_null($user)) {
                         $user = new User();
-                        $user->email_address;
+                        $user->email_address = $email_address;
                     }
 
                     $user->first_name = @ucfirst($this->getLDAPVal("givenName"));
                     $user->last_name = @ucfirst($this->getLDAPVal("sn"));
                     $user->sso = strtolower($this->username);
                     $user->save(false);
-                    $user->userAuth->delete();
                 }
 
                 if (!is_null($user)) {

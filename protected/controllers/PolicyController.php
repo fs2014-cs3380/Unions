@@ -92,7 +92,7 @@ class PolicyController extends Controller
         if (isset($_POST['Policy'])) {
             $model->attributes = $_POST['Policy'];
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->policy_id));
+                $this->redirect(array('/policy'));
         }
 
         $this->render('update', array(
@@ -123,9 +123,11 @@ class PolicyController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('Policy');
+        $this->layout='//layouts/column1';
+
+        $categories = Category::model()->with('policies')->findAll('policies.active=true');
         $this->render('index', array(
-            'dataProvider' => $dataProvider,
+            'categories' => $categories,
         ));
     }
 
@@ -134,11 +136,17 @@ class PolicyController extends Controller
      */
     public function actionAdmin()
     {
+        $this->layout='//layouts/column1';
+
         $policies = new Policy('search');
         $tags = new Tag('search');
         $categories = new Category('search');
-
-        $this->layout='//layouts/column1';
+        if(isset($_GET['Policy']))
+            $policies->attributes = $_GET['Policy'];
+        if(isset($_GET['Category']))
+            $categories->attributes = $_GET['Category'];
+        if(isset($_GET['Tag']))
+            $tags->attributes = $_GET['Tag'];
 
         $this->render('admin', array(
             'policies' => $policies,

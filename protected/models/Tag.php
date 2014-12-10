@@ -12,6 +12,9 @@
  */
 class Tag extends CActiveRecord
 {
+
+    public $tagged_count;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -44,7 +47,8 @@ class Tag extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'taggeds' => array(self::HAS_MANY, 'Tagged', 'tag_id'),
+			'tagged' => array(self::HAS_MANY, 'Tagged', 'tag_id'),
+            'taggedCount' => array(self::STAT,'Tagged','tag_id'),
 		);
 	}
 
@@ -76,6 +80,8 @@ class Tag extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+        $criteria->together = true; //('taggedCount');
+        $criteria->with = 'taggedCount';
 
 		$criteria->compare('tag_id',$this->tag_id);
 		$criteria->compare('tag',$this->tag,true);

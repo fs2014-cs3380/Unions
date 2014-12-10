@@ -2,17 +2,18 @@
 $this->widget(
     'booster.widgets.TbExtendedGridView',
     array(
-        'fixedHeader' => true,
-        'headerOffset' => 40,
+        'headerOffset' => 30,
         // 40px is the height of the main navigation at bootstrap
         'type' => 'striped',
         'dataProvider' => $policies->search(),
-        'responsiveTable' => true,
-        'template' => "{items}",
+        'filter'=>$policies,
+        'template' => "{items}{pager}",
         'columns' => array(
-            'policy_id',
-            'title',
-            array('name'=>'text', 'value'=>'htmlspecialchars_decode($data->text)', 'type'=>'raw'),
+            array(
+                'name'=>'title',
+                'value'=>'strlen($data->title) > 40 ? substr($data->title, 0, 40)."..." : $data->title'
+            ),
+            array('name'=>'text', 'value'=>'substr(strip_tags($data->text), 0, 100)."..."', 'type'=>'html'),
             array(
                 'class'=>'booster.widgets.TbButtonColumn',
             ),

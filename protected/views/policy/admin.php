@@ -11,15 +11,16 @@ $this->breadcrumbs = array(
 $this->widget(
     'booster.widgets.TbTabs',
     array(
-        'type' => 'pills', // 'tabs' or 'pills'
+        'type' => 'tabs', // 'tabs' or 'pills'
+        'justified' => true,
         'tabs' => array(
             array(
                 'label' => 'Policies',
-                'content' => $this->renderPartial('_policies', array('policies'=> $policies)),
+                'content' => $this->renderPartial('_policies', array('policies'=> $policies), true),
                 'active' => true
             ),
-            array('label' => 'Tags', 'content' => $this->renderPartial('_tags'), array('tags'=> $tags)),
-            array('label' => 'Categories', 'content' => $this->renderPartial('_categories', array('categories'=> $categories))),
+            array('label' => 'Tags', 'content' => $this->renderPartial('_tags', array('tags'=> $tags), true)),
+            array('label' => 'Categories', 'content' => $this->renderPartial('_categories', array('categories'=> $categories), true)),
         ),
     )
 );
