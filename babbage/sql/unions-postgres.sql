@@ -137,42 +137,42 @@ CREATE TABLE attraction (
 /* END RESERVATION TABLES */
 
 /* LOST & FOUND TABLES */
-CREATE TABLE item_status (
-  item_status_id INTEGER     NOT NULL PRIMARY KEY,
-  description    VARCHAR(45) NOT NULL
-);
 
-/* @todo Add constraint for values only equal to -1, 0, or 1 */
+
 CREATE TABLE item_type (
-  item_type_id   INTEGER     NOT NULL PRIMARY KEY,
+  item_type_id   SERIAL PRIMARY KEY,
   name           VARCHAR(45) NOT NULL,
-  status         INTEGER     NOT NULL DEFAULT 0, /* -1 = DECLINED, 0 = PENDING, 1 = APPROVED */
   create_time    TIMESTAMP,
   create_user_id INTEGER,
   update_time    TIMESTAMP,
   update_user_id INTEGER
 );
-
+CREATE TABLE item_status (
+  item_status_id SERIAL PRIMARY KEY,
+  description    VARCHAR(45) NOT NULL
+);
 CREATE TABLE item (
-  item_id          INTEGER      NOT NULL PRIMARY KEY,
+  item_id          SERIAL PRIMARY KEY,
   location         VARCHAR(255) NOT NULL,
-  description      TEXT         NOT NULL,
-  found_user_email VARCHAR(100) NOT NULL,
+  description      VARCHAR(255) NOT NULL,
+  found_user		VARCHAR(45) NOT NULL,
   found_date       DATE         NOT NULL,
   item_type_id     INTEGER      NOT NULL REFERENCES item_type,
-  item_status_id   INTEGER      NOT NULL REFERENCES item_status,
+  status         INTEGER     NOT NULL DEFAULT 0 REFERENCES item_status, /* -1 = DECLINED, 0 = PENDING, 1 = APPROVED */
   create_time      TIMESTAMP,
   create_user_id   INTEGER,
   update_time      TIMESTAMP,
   update_user_id   INTEGER
 );
-
 CREATE TABLE item_claim (
+	id SERIAL PRIMARY KEY,
   item_id    INTEGER NOT NULL REFERENCES item,
-  user_id    INTEGER NOT NULL REFERENCES "user",
-  claim_time TIMESTAMP,
-  PRIMARY KEY (item_id, user_id)
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  email VARCHAR(100)
 );
+
+
 /* END LOST & FOUND TABLES */
 
 INSERT INTO category (name, create_user_id, update_user_id)

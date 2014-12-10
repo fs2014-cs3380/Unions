@@ -1,28 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "unions.item_type".
+ * This is the model class for table "item_type".
  *
- * The followings are the available columns in table 'unions.item_type':
+ * The followings are the available columns in table 'item_type':
  * @property integer $item_type_id
  * @property string $name
- * @property integer $status
  * @property string $create_time
  * @property integer $create_user_id
  * @property string $update_time
  * @property integer $update_user_id
- *
- * The followings are the available model relations:
- * @property Item[] $items
  */
-class ItemType extends UActiveRecord
+class ItemType extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'unions.item_type';
+		return 'item_type';
 	}
 
 	/**
@@ -33,13 +29,13 @@ class ItemType extends UActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('item_type_id, name', 'required'),
-			array('item_type_id, status, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
+			array('name', 'required'),
+			array('create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
 			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('item_type_id, name, status, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
+			array('item_type_id, name, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,7 +47,6 @@ class ItemType extends UActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'items' => array(self::HAS_MANY, 'Item', 'item_type_id'),
 		);
 	}
 
@@ -62,8 +57,7 @@ class ItemType extends UActiveRecord
 	{
 		return array(
 			'item_type_id' => 'Item Type',
-			'name' => 'Name',
-			'status' => 'Status',
+			'name' => 'Item Type',
 			'create_time' => 'Create Time',
 			'create_user_id' => 'Create User',
 			'update_time' => 'Update Time',
@@ -91,7 +85,6 @@ class ItemType extends UActiveRecord
 
 		$criteria->compare('item_type_id',$this->item_type_id);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('status',$this->status);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('create_user_id',$this->create_user_id);
 		$criteria->compare('update_time',$this->update_time,true);
@@ -112,4 +105,9 @@ class ItemType extends UActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public static function getItemTypeOptions(){
+        return CHtml::listData(ItemType::model()->findAll(), 'item_type_id', 'name');
+    }
+
 }
