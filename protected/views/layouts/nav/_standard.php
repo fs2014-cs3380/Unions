@@ -18,6 +18,7 @@ $this->widget(
                     array('label' => 'Buildings', 'url' => Yii::app()->baseUrl.'/babbage/buildings/buildings_main.php'),
                     array('label' => 'Reserve a Space', 'url' => Yii::app()->baseUrl.'/babbage/reservearoom/reservearoom.php'),
                     array('label' => 'Lost & Found', 'url' => Yii::app()->baseUrl.'/lostandfound/'),
+                    array('label' => 'Lost & Found Yii', 'url' => Yii::app()->baseUrl.'/item/lostandfound/'),
                     array('label' => 'Policies', 'url' => '#', 'items'=>array(
                         array('label' => 'View All', 'url' => Yii::app()->baseUrl.'/babbage/policies/'),
                         array('label' => 'Admin', 'url' => Yii::app()->baseUrl.'/babbage/policies/admin/', 'visible'=>!Yii::app()->user->isGuest),
