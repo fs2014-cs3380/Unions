@@ -32,6 +32,10 @@ return array(
 			'urlFormat'=>'path',
             'showScriptName'=>false,
 			'rules'=>array(
+                'lostandfound/'=>'Item/',
+                'lostandfound/<id:\d+>'=>'Item/view',
+                'lostandfound/<action:\w+>/<id:\d+>'=>'Item/<action>',
+                'lostandfound/<action:\w+>'=>'Item/<action>',
                 '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
@@ -56,6 +60,12 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
+                array(
+                    'class'=>'CFileLogRoute',
+                    'levels'=>'log, trace',
+                    'categories' => 'system.db.CDbCommand',
+                    'logFile' => 'db.log',
+                ),
 			),
 		),
 		'booster' => array(

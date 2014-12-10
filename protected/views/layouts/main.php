@@ -1,4 +1,6 @@
-<?php /* @var $this Controller */ ?>
+<?php
+$this->setNavbar();
+/* @var $this Controller */ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,16 +37,32 @@
 
 <body>
 <header id="header">
-<div class="container">
-    <div class="row">
-        <div class ="pull-left col-xs-6">
-<?php echo CHtml::image(Yii::app()->baseUrl.'/images/banner_logo.jpg', 'Student Center', array('class' => 'img-responsive')); ?>
+    <div class="container">
+        <div class="row">
+            <div class="pull-left col-xs-6">
+                <?php echo CHtml::image(Yii::app()->baseUrl . '/images/banner_logo.jpg', 'Student Center', array('class' => 'img-responsive')); ?>
+            </div>
         </div>
     </div>
-</div>
 </header>
 <hr class="gold-bar">
-<?php $this->renderPartial($this->navbar); ?>
+
+<?php
+$this->widget(
+    'booster.widgets.TbNavbar',
+    array(
+        'type' => 'inverse',
+        'brand' => false,
+        'brandUrl' => '#',
+        'collapse' => true, // requires bootstrap-responsive.css
+        'fixed' => false,
+        'fluid' => true,
+        'items' => $this->navbar,
+    )
+);
+
+//$this->renderPartial($this->navbar, null, false, false)
+?>
 
 <div class="container-fluid">
     <!-- mainmenu -->
