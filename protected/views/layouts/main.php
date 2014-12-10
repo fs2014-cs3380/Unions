@@ -43,7 +43,8 @@
     </div>
 </div>
 </header>
-<?php $this->renderPartial('//layouts/nav/_standard'); ?>
+<hr class="gold-bar">
+<?php $this->renderPartial($this->navbar); ?>
 
 <div class="container-fluid">
     <!-- mainmenu -->

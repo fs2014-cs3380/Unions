@@ -1,5 +1,6 @@
 <?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
 	'id'=>'policy-form',
+    'type'=>'horizontal',
 	'enableAjaxValidation'=>false,
 )); ?>
 
@@ -7,19 +8,20 @@
 
 <?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->textAreaGroup($model,'title', array('widgetOptions'=>array('htmlOptions'=>array('rows'=>6, 'cols'=>50, 'class'=>'span8')))); ?>
+	<?php echo $form->textFieldGroup($model,'title', array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span8')))); ?>
+
+    <?php echo $form->select2Group($model, 'category_id', array(
+        'widgetOptions'=>array(
+            'asDropDownList'=> true,
+            'data'=>Policy::getCategoryOptions(),
+            'options'=>array(
+                'maximumSelectionSize'=>1,
+            ),
+            'htmlOptions'=>array('class'=>'span5')))); ?>
 
 	<?php echo $form->textAreaGroup($model,'text', array('widgetOptions'=>array('htmlOptions'=>array('rows'=>6, 'cols'=>50, 'class'=>'span8')))); ?>
 
-	<?php echo $form->textFieldGroup($model,'category_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-	<?php echo $form->textFieldGroup($model,'create_time',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
-
-	<?php echo $form->textFieldGroup($model,'create_user_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
-
-	<?php echo $form->textFieldGroup($model,'update_time',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
-
-	<?php echo $form->textFieldGroup($model,'update_user_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
 <div class="form-actions">
 	<?php $this->widget('booster.widgets.TbButton', array(

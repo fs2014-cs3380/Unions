@@ -13,6 +13,6 @@ $this->breadcrumbs=array(
 	);
 	?>
 
-	<h1>Update Policy <?php echo $model->policy_id; ?></h1>
+	<h1>Update Policy <small><?php echo $model->title; ?></small></h1>
 
 <?php echo $this->renderPartial('_form',array('model'=>$model)); ?>

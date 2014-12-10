@@ -1,4 +1,4 @@
-<hr style="margin: 0;border-color: gold;">
+
 <?php
 $this->widget(
     'booster.widgets.TbNavbar',

@@ -20,6 +20,14 @@
  */
 class Policy extends UActiveRecord
 {
+
+    public function afterFind(){
+        parent::afterFind();
+
+        $this->text = htmlspecialchars_decode($this->text);
+        $this->title = htmlspecialchars_decode($this->title);
+    }
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -65,8 +73,8 @@ class Policy extends UActiveRecord
 	{
 		return array(
 			'policy_id' => 'Policy',
-			'title' => 'Title',
-			'text' => 'Text',
+			'title' => 'Name',
+			'text' => 'Policy',
 			'category_id' => 'Category',
 			'active' => 'Active',
 			'create_time' => 'Create Time',
@@ -94,21 +102,23 @@ class Policy extends UActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('policy_id',$this->policy_id);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('text',$this->text,true);
 		$criteria->compare('category_id',$this->category_id);
 		$criteria->compare('active',$this->active);
-		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('create_user_id',$this->create_user_id);
-		$criteria->compare('update_time',$this->update_time,true);
-		$criteria->compare('update_user_id',$this->update_user_id);
         $criteria->addCondition('active = true');
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+            'pagination'=>array(
+                'pageSize'=>20,
+            )
 		));
 	}
+
+    public function getCategoryOptions(){
+        return CHtml::listData(Category::model()->findAll(), 'category_id', 'name');
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.
