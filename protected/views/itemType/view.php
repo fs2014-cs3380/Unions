@@ -20,7 +20,6 @@ array('label'=>'Manage ItemType','url'=>array('admin')),
 'attributes'=>array(
 		'item_type_id',
 		'name',
-		'status',
 		'create_time',
 		'create_user_id',
 		'update_time',

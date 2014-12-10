@@ -45,13 +45,10 @@ return false;
 'columns'=>array(
 		'item_type_id',
 		'name',
-		'status',
 		'create_time',
 		'create_user_id',
 		'update_time',
-		/*
 		'update_user_id',
-		*/
 array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),

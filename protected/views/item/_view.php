@@ -12,8 +12,8 @@
 	<?php echo CHtml::encode($data->description); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('found_user_email')); ?>:</b>
-	<?php echo CHtml::encode($data->found_user_email); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('found_user')); ?>:</b>
+	<?php echo CHtml::encode($data->found_user); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('found_date')); ?>:</b>
@@ -21,11 +21,12 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('item_type_id')); ?>:</b>
-	<?php echo CHtml::encode($data->item_type_id); ?>
+	<?php echo CHtml::encode($data->item_type_id);?>
+
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('item_status_id')); ?>:</b>
-	<?php echo CHtml::encode($data->item_status_id); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
+	<?php echo CHtml::encode($data->status); ?>
 	<br />
 
 	<?php /*

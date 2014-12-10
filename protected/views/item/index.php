@@ -1,17 +1,23 @@
 <?php
-$this->breadcrumbs=array(
-	'Items',
+$this->breadcrumbs = array(
+    'Items',
 );
 
-$this->menu=array(
-array('label'=>'Create Item','url'=>array('create')),
-array('label'=>'Manage Item','url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'Create Item', 'url' => array('create')),
+    array('label' => 'Manage Item', 'url' => array('admin')),
 );
-?>
 
-<h1>Items</h1>
+$this->widget(
+    'booster.widgets.TbNavbar',
+    array(
+        'brand' => 'Lost and Found',
+        'fixed' => false,
+        'fluid' => true,
 
-<?php $this->widget('booster.widgets.TbListView',array(
-'dataProvider'=>$dataProvider,
-'itemView'=>'_view',
+    )
+);
+$this->widget('booster.widgets.TbListView', array(
+    'dataProvider' => $dataProvider,
+    'itemView' => '_view',
 )); ?>
