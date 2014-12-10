@@ -10,15 +10,16 @@
  * @property integer $create_user_id
  * @property string $update_time
  * @property integer $update_user_id
+ * @property integer $status
  */
-class ItemType extends CActiveRecord
+class ItemType extends UActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'item_type';
+		return 'unions.item_type';
 	}
 
 	/**
@@ -30,12 +31,13 @@ class ItemType extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name', 'required'),
-			array('create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
+            array('status', 'default', 'value'=>0),
+			array('create_user_id, update_user_id, status', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
 			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('item_type_id, name, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
+			array('item_type_id, name, create_time, create_user_id, update_time, update_user_id, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,11 +59,12 @@ class ItemType extends CActiveRecord
 	{
 		return array(
 			'item_type_id' => 'Item Type',
-			'name' => 'Item Type',
+			'name' => 'Name',
 			'create_time' => 'Create Time',
 			'create_user_id' => 'Create User',
 			'update_time' => 'Update Time',
 			'update_user_id' => 'Update User',
+			'status' => 'Status',
 		);
 	}
 
@@ -89,6 +92,7 @@ class ItemType extends CActiveRecord
 		$criteria->compare('create_user_id',$this->create_user_id);
 		$criteria->compare('update_time',$this->update_time,true);
 		$criteria->compare('update_user_id',$this->update_user_id);
+		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -105,9 +109,7 @@ class ItemType extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-
     public static function getItemTypeOptions(){
         return CHtml::listData(ItemType::model()->findAll(), 'item_type_id', 'name');
     }
-
 }

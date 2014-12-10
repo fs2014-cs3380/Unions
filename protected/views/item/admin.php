@@ -27,7 +27,7 @@ return false;
 <?php $this->widget('booster.widgets.TbGridView',array(
 'id'=>'item-grid',
 'dataProvider'=>$model->search(),
-'filter'=>$model,
+/*'filter'=>$model,*/
 'columns'=>array(
 		'item_id',
 		'location',

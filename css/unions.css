@@ -23,3 +23,6 @@
     margin: 0;
     border-color: #F1B82D;
 }
+.grid-view .button-column {
+    width: 80px !important;
+}

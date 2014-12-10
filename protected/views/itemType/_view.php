@@ -24,5 +24,9 @@
 	<?php echo CHtml::encode($data->update_user_id); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
+	<?php echo CHtml::encode($data->status); ?>
+	<br />
+
 
 </div>

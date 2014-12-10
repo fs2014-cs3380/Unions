@@ -138,7 +138,7 @@ class ItemController extends Controller
         $model = new Item('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Item']))
-            $model->attributes = $_GET['Item'];
+            Item::model()->attributes = $_GET['Item'];
 
         $this->render('admin', array(
             'model' => $model,

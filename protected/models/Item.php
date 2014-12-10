@@ -36,6 +36,7 @@ class Item extends CActiveRecord
 		return array(
 			array('location, description, found_user, found_date, item_type_id', 'required'),
 			array('item_type_id, status, create_user_id, update_user_id', 'numerical', 'integerOnly'=>true),
+            array('status', 'default', 'value'=>1),
 			array('location, description', 'length', 'max'=>255),
 			array('found_user', 'length', 'max'=>45),
 			array('create_time, update_time', 'safe'),

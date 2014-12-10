@@ -49,6 +49,9 @@ return false;
 		'create_user_id',
 		'update_time',
 		'update_user_id',
+		/*
+		'status',
+		*/
 array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),
