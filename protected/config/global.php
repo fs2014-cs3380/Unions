@@ -32,6 +32,10 @@ return array(
 			'urlFormat'=>'path',
             'showScriptName'=>false,
 			'rules'=>array(
+                'rooms/'=>'EventSpace/',
+                'room/<id:\d+>'=>'EventSpace/view',
+                'room/<action:\w+>/<id:\d+>'=>'EventSpace/<action>',
+                'room/<action:\w+>'=>'EventSpace/<action>',
                 'policies/'=>'Policy/',
                 'lostandfound/'=>'Item/',
                 'lostandfound/<id:\d+>'=>'Item/view',
@@ -41,6 +45,7 @@ return array(
                 '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
+            'caseSensitive'=>false,
 		),
 
         'db_ems'=>array(

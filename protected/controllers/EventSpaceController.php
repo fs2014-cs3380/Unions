@@ -6,7 +6,7 @@ class EventSpaceController extends Controller
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout = '//layouts/column2';
+    public $layout = '//layouts/column1';
 
     /**
      * @return array action filters
@@ -123,9 +123,16 @@ class EventSpaceController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('EventSpace');
+        $criteria=new CDbCriteria;
+        $criteria->together = true;
+        $criteria->with = array('policies', 'policies.tags', 'policies.tags.tag');
+        $criteria->addCondition('policies.active = true');
+
+        $buildings = Building::model()->findAll();
+
+
         $this->render('index', array(
-            'dataProvider' => $dataProvider,
+            'buildings' => $buildings,
         ));
     }
 

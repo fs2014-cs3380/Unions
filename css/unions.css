@@ -1,4 +1,4 @@
-.container-fluid{
+.container-fluid, .container{
     max-width: 1168px;
 }
 
@@ -9,6 +9,10 @@ thead th{
 
 .navbar{
     border-radius: 0px;
+}
+
+.navbar .container-fluid{
+    padding: 0px !important;
 }
 
 .navbar-inverse{
@@ -43,4 +47,13 @@ span.label-warning{
 
 span.label-warning a{
     color: #000000;
+}
+
+#footer {
+    margin: 10px 0px;
+    border-top: 1px solid #F1B82D !important;
+}
+
+.items h5{
+    font-weight: bold;
 }

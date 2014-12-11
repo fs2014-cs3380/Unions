@@ -1,6 +1,5 @@
 <?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
 	'id'=>'policy-form',
-    'type'=>'horizontal',
 	'enableAjaxValidation'=>false,
 )); ?>
 

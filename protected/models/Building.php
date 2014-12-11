@@ -15,9 +15,9 @@
  * @property integer $update_user_id
  *
  * The followings are the available model relations:
+ * @property Floor[] $floors
  * @property Attraction[] $attractions
  * @property Feature[] $features
- * @property Floor[] $floors
  */
 class Building extends UActiveRecord
 {
@@ -56,9 +56,9 @@ class Building extends UActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'floors' => array(self::HAS_MANY, 'Floor', 'building_id'),
 			'attractions' => array(self::HAS_MANY, 'Attraction', 'building_id'),
 			'features' => array(self::HAS_MANY, 'Feature', 'building_id'),
-			'floors' => array(self::HAS_MANY, 'Floor', 'building_id'),
 		);
 	}
 
