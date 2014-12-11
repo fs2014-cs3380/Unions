@@ -1,6 +1,10 @@
 <?php
-Yii::app()->clientScript->scriptMap=array(
-    'jquery.js'=>false,
+$cs = Yii::app()->clientScript->scriptMap = array(
+    'datepicker3.css' => false,
+    'jquery.js' => false,
+    'bootstrap-datepicker.min.js' => false,
+    'bootstrap-datepicker-noconflict.js' => false,
+    'jquery.maskedinput.js' => false,
 );
 $this->beginWidget(
     'booster.widgets.TbModal',
@@ -14,13 +18,15 @@ $this->beginWidget(
 
 <div class="modal-header">
     <a class="close" data-dismiss="modal">&times;</a>
-    <h4>Claim Lost Item</h4>
+    <h3>Claim Lost Item</h3>
 </div>
 
 <div class="modal-body">
     <?php
     $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
         'id'=>'item-claim-form',
+        'enableClientValidation' => true,
+        'clientOptions' => array('validateOnSubmit' => true, 'afterValidate' => 'js:yiiFix.ajaxSubmit.afterValidate'),
         'enableAjaxValidation'=>false,
     )); ?>
 
