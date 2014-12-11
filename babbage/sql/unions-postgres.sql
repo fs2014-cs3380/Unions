@@ -166,6 +166,7 @@ CREATE TABLE item (
   update_time      TIMESTAMP,
   update_user_id   INTEGER
 );
+
 CREATE TABLE item_claim (
 	id SERIAL PRIMARY KEY,
   item_id    INTEGER NOT NULL REFERENCES item,
@@ -523,4 +524,19 @@ VALUES
   (DEFAULT, 'Leadership Auditorium', 2, 150, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
   (DEFAULT, 'Leadership Lounge 2nd Floor', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
   (DEFAULT, 'Traditions Lounge', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
-		
+ 
+INSERT INTO item_type VALUES (1, 'Cellphone', 'Pending');
+INSERT INTO item_type VALUES (2, 'Laptop', 'Pending');
+INSERT INTO item_type VALUES (3, 'Sunglasses', 'Pending');
+INSERT INTO item_type VALUES (5, 'Jacket', 'Pending');
+INSERT INTO item_type VALUES (4, 'Backpack', 'Pending');
+
+INSERT INTO item_status VALUES (1, 'Information Desk');
+INSERT INTO item_status VALUES (2, 'Claimed');
+INSERT INTO item_status VALUES (3, 'Sent to MUPD');
+ 
+INSERT INTO item VALUES (1,'Student Center', 'Black coat', 'Test', '2014-12-08', 5);
+INSERT INTO item VALUES (2,'Memorial Union', 'iPhone 5', 'Test', '2014-12-08', 1);
+
+
+

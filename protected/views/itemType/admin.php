@@ -40,8 +40,7 @@ return false;
 		'name',
 		'create_time',
 		'create_user_id',
-		'update_time',
-		'update_user_id',
+        'status',
 		/*
 		'status',
 		*/
@@ -50,3 +49,6 @@ array(
 ),
 ),
 )); ?>
+
+
+
