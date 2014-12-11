@@ -66,7 +66,7 @@ $this->widget(
 //$this->renderPartial($this->navbar, null, false, false)
 ?>
 
-<div class="container-fluid">
+<div id="main-content" class="container-fluid">
     <!-- mainmenu -->
     <?php echo $content; ?>
 

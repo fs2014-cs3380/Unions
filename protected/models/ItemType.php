@@ -11,6 +11,9 @@
  * @property string $update_time
  * @property integer $update_user_id
  * @property string $status
+ *
+ * The followings are the available model relations:
+ * @property string $statusItem[] $items
  */
 class ItemType extends UActiveRecord
 {
@@ -31,13 +34,12 @@ class ItemType extends UActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name', 'required'),
-            //array('status', 'default', 'value'=>0),
 			array('create_user_id, update_user_id,', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
 			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('item_type_id, name, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
+			array('status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,7 +51,8 @@ class ItemType extends UActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-		);
+            'items' => array(self::HAS_MANY, 'Item', 'item_type_id'),
+        );
 	}
 
 	/**
@@ -86,9 +89,8 @@ class ItemType extends UActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('item_type_id',$this->item_type_id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('status',$this->status,true);
+		$criteria->compare('LOWER(status)',strtolower($this->status),true);
+        $criteria->order = 'status DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -107,5 +109,24 @@ class ItemType extends UActiveRecord
 	}
     public static function getItemTypeOptions(){
         return CHtml::listData(ItemType::model()->findAll(), 'item_type_id', 'name');
+    }
+    public static function getStatusOptions(){
+
+        return array("Pending"=>"Pending", "Approved"=>"Approved", "Declined"=>"Declined");
+    }
+    public function ajaxStatusOptions()
+    {
+        echo CHtml::activeDropDownList($this,'status', $this->getStatusOptions(),array(
+            'ajax' => array(
+                'type'=>'POST',
+                'url'=>Yii::app()->createUrl('itemtype/statusUpdate'),
+                'update'=>'#outlet',
+                'data'=>'js:jQuery(this).serialize() + "&id='.$this->item_type_id.'"',
+                'success'=>'function(data) {
+                    $("#main-content").html(data);
+                }',
+            ),
+            'id' => 'Item_type-'.$this->item_type_id,
+        ));
     }
 }
