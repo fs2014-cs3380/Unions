@@ -41,11 +41,37 @@ $this->beginWidget(
     <?php echo $form->textFieldGroup($model,'email',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>100)))); ?>
 
     <div class="form-actions">
-        <?php $this->widget('booster.widgets.TbButton', array(
-            'buttonType'=>'button',
-            'context'=>'primary',
-            'label'=>'Claim',
-        )); ?>
+        <?php echo CHtml::ajaxSubmitButton(
+            'Claim',
+            Yii::app()->createUrl('/lostandfound/claimItem'),
+            array(
+                'type' => 'POST',
+                'beforeSend' => 'js:yiiFix.ajaxSubmit.beforeSend("#workExperienceForm")',
+                'data' => 'js: $("#item-claim-form").serialize()',
+                'success' => 'function(experience){
+                             var data = {
+                                         id:"' . $model->primaryKey . '"
+                                         };
+                                    $.ajax({
+                                    url: "' . Yii::app()->createUrl("hr/profile/getStatusBarInfo") . '",
+                                    type: "POST",
+                                    data: data,
+                                    success: function(data){
+                                        updateStatusBar(data);
+                                    }
+                                });
+                        $("#experience-modal").modal("hide");
+                        $("#experience-modal").on("hidden.bs.modal", function (e){
+                            $("#experience-modal").remove();
+                            $(".experience_container").html(experience);
+                        });
+                    }'
+            ),
+            array(
+                'class' => 'btn btn-primary',
+                'id' => 'save_button-' . uniqid(),
+            )
+        ); ?>
     </div>
 
     <?php $this->endWidget(); ?>
