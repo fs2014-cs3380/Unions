@@ -127,6 +127,7 @@ class ItemType extends UActiveRecord
                 }',
             ),
             'id' => 'Item_type-'.$this->item_type_id,
+            'class'=> 'form-control',
         ));
     }
 }

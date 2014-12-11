@@ -204,7 +204,7 @@ class ItemController extends Controller
             array(
                 'class' => 'booster.widgets.TbMenu',
                 'type' => 'navbar',
-                'htmlOptions' => array('style' => 'padding-right: 10px; border-right: 2px solid #F1B82D'),
+                'htmlOptions' => array('style' => 'padding-right: 10px;'),
                 'items' => array(
                     array('label' => 'Back to Main', 'url' => array('/')),
                 ),

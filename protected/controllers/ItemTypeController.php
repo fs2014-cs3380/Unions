@@ -184,4 +184,29 @@ class ItemTypeController extends Controller
 
         } else throw new CHttpExectption(400, 'invalid parameters recieved');
     }
+
+    public function setNavbar(){
+        $this->navbar = array(
+            array(
+                'class' => 'booster.widgets.TbMenu',
+                'type' => 'navbar',
+                'htmlOptions' => array('style' => 'padding-right: 10px;'),
+                'items' => array(
+                    array('label' => 'Back to Main', 'url' => array('/')),
+                ),
+            ),
+            array(
+                'class' => 'booster.widgets.TbMenu',
+                'type' => 'navbar',
+                'htmlOptions' => array('class' =>'pull-right'),
+                'items' => array(
+                    array('label' => 'View All Items', 'url' => array('/lostandfound/index'), 'visible' => Yii::app()->user->isGuest),
+                    array('label' => 'View All Items', 'url' => array('/lostandfound/admin'), 'visible' => !Yii::app()->user->isGuest),
+                    array('label' => 'Add Item', 'url' => array('/lostandfound/create')),
+                    array('label' => 'Show Claimed Items', 'url' => array('/lostandfound/claim'), 'visible' => !Yii::app()->user->isGuest),
+                    array('label' => 'Show Pending Items', 'url' => array('itemtype/admin'), 'visible' => !Yii::app()->user->isGuest),
+                )
+            )
+        );
+    }
 }
