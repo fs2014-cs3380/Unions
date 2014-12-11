@@ -30,6 +30,7 @@ require $mainDir . "/includes/header.php";
     everyone.</p>
 
 <?php
+require_once("../secure/database.php");
 $conn = pg_connect(HOST . " " . DBNAME . " " . USERNAME . " " . PASSWORD);
 pg_query("SET search_path=unions;");
 $str = '';
@@ -80,6 +81,7 @@ while ($res = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     }
     echo "</ul>\n";
 }
+
 ?>
 </body>
 </html>
