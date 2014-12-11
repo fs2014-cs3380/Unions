@@ -35,6 +35,10 @@ return false;
 		'found_user',
 		'found_date',
 		'item_type_id',
+        array(
+           'name'=>'status',
+            'value'=>'$data->statuses->description',
+        ),
 		/*
 		'status',
 		'create_time',

@@ -32,7 +32,10 @@ class Controller extends CController
                     array('label' => 'Home', 'url' => $this->createUrl('/')),
                     array('label' => 'Buildings', 'url' => Yii::app()->baseUrl . '/babbage/buildings/buildings_main.php'),
                     array('label' => 'Reserve a Space', 'url' => Yii::app()->baseUrl . '/babbage/reservearoom/reservearoom.php'),
-                    array('label' => 'Lost & Found', 'url' => Yii::app()->baseUrl . '/lostandfound/'),
+                    array('label' => 'Lost and Found', 'url' => '#', 'items' => array(
+                        array('label' => 'View All', 'url' => $this->createUrl('item/admin')),
+                        array('label' => 'Production View', 'url' => $this->createUrl('policy/admin'), 'visible' => !Yii::app()->user->isGuest),
+                    )),
                     array('label' => 'Policies', 'url' => '#', 'items' => array(
                         array('label' => 'View All', 'url' => $this->createUrl('/policies')),
                         array('label' => 'Admin', 'url' => $this->createUrl('policy/admin'), 'visible' => !Yii::app()->user->isGuest),

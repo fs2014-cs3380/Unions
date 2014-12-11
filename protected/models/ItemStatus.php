@@ -96,7 +96,7 @@ class ItemStatus extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-/*    public static function getItemStatusOptions(){
+    public static function getItemStatusOptions(){
         return CHtml::listData(ItemStatus::model()->findAll(), 'item_status_id', 'description');
-    }*/
+    }
 }

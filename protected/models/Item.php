@@ -54,6 +54,9 @@ class Item extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'itemType' => array(self::BELONGS_TO, 'ItemType', 'item_type_id'),
+            'statuses' => array(self::BELONGS_TO, 'ItemStatus', 'status'),
+            'itemClaims' => array(self::HAS_MANY, 'ItemClaim', 'item_id'),
 		);
 	}
 
@@ -94,6 +97,8 @@ class Item extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+        $criteria->together = true;
+        $criteria->with = 'statuses';
 
 		$criteria->compare('item_id',$this->item_id);
 		$criteria->compare('location',$this->location,true);
@@ -102,10 +107,6 @@ class Item extends CActiveRecord
 		$criteria->compare('found_date',$this->found_date,true);
 		$criteria->compare('item_type_id',$this->item_type_id);
 		$criteria->compare('status',$this->status);
-		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('create_user_id',$this->create_user_id);
-		$criteria->compare('update_time',$this->update_time,true);
-		$criteria->compare('update_user_id',$this->update_user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
