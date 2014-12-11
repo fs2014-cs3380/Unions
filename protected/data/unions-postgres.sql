@@ -535,8 +535,8 @@ INSERT INTO item_status VALUES (1, 'Information Desk');
 INSERT INTO item_status VALUES (2, 'Claimed');
 INSERT INTO item_status VALUES (3, 'Sent to MUPD');
  
-INSERT INTO item VALUES (1,'Student Center', 'Black coat', 'Test', '2014-12-08', 5);
-INSERT INTO item VALUES (2,'Memorial Union', 'iPhone 5', 'Test', '2014-12-08', 1);
+INSERT INTO item VALUES (DEFAULT,'Student Center', 'Black coat', 'Test', '2014-12-08', 5);
+INSERT INTO item VALUES (DEFAULT,'Memorial Union', 'iPhone 5', 'Test', '2014-12-08', 1);
 
 
 
