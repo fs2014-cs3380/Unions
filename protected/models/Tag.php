@@ -84,7 +84,7 @@ class Tag extends CActiveRecord
         $criteria->with = 'taggedCount';
 
 		$criteria->compare('tag_id',$this->tag_id);
-		$criteria->compare('tag',$this->tag,true);
+		$criteria->compare('LOWER(tag)', strtolower($this->tag),true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

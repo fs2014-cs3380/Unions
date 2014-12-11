@@ -6,7 +6,7 @@ class PolicyController extends Controller
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout = '//layouts/column2';
+    public $layout = '//layouts/column1';
 
     /**
      * @return array action filters
@@ -123,22 +123,21 @@ class PolicyController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout='//layouts/column1';
-
-        $tag = new Tag('search');
         $criteria=new CDbCriteria;
         $criteria->together = true;
         $criteria->with = array('policies', 'policies.tags', 'policies.tags.tag');
         $criteria->addCondition('policies.active = true');
 
         if(isset($_POST['Tags'])) {
-            $tag->attributes = $_POST['Tags'];
-            $criteria->addCondition('LOWER(tag.tag) IN (\''.str_replace(',', '\', \'',strtolower($_POST['Tags'])).'\')');
+            $criteria->addCondition('LOWER(tag.tag) IN (\'' . str_replace(',', '\', \'', strtolower($_POST['Tags'])) . '\')');
             $categories = Category::model()->findAll($criteria);
             $this->renderPartial('_policies', array(
                 'categories' => $categories,
             ));
         } else {
+            if (isset($_GET['Tag']))
+                $criteria->addCondition('tag.tag LIKE \''.$_GET['Tag'].'\'');
+
             $categories = Category::model()->findAll($criteria);
             $this->render('index', array(
                 'categories' => $categories,
@@ -151,8 +150,6 @@ class PolicyController extends Controller
      */
     public function actionAdmin()
     {
-        $this->layout='//layouts/column1';
-
         $policies = new Policy('search');
         $tags = new Tag('search');
         $categories = new Category('search');

@@ -13,18 +13,23 @@ array('label'=>'Manage Policy','url'=>array('admin')),
 );
 ?>
 
-<h1>View Policy #<?php echo $model->policy_id; ?></h1>
+<h1><?php echo $model->title; ?></h1>
 
-<?php $this->widget('booster.widgets.TbDetailView',array(
-'data'=>$model,
-'attributes'=>array(
-		'policy_id',
-		'title',
-		'text',
-		'category_id',
-		'create_time',
-		'create_user_id',
-		'update_time',
-		'update_user_id',
-),
-)); ?>
+<div><?php echo $model->text; ?></div>
+<div>
+    <?php
+    foreach($model->tags as $tag){
+        $this->widget(
+            'booster.widgets.TbLabel',
+            array(
+                'context' => 'warning',
+                // 'default', 'primary', 'success', 'info', 'warning', 'danger'
+                'label' => CHtml::link('#'.$tag->tag->tag, $this->createUrl('/policies?Tag='.$tag->tag->tag)),
+                'encodeLabel'=>false,
+            )
+        );
+    }
+    ?>
+</div>
+
+

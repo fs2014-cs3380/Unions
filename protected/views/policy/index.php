@@ -8,9 +8,21 @@ $this->menu = array(
     array('label' => 'Manage Policy', 'url' => array('admin')),
 );
 
-/* @todo Add select2 search filter */
 ?>
 
+<h1>Policies <span style="font-size: 10pt;"><?php if(!Yii::app()->user->isGuest):?>(<a href="<?php echo $this->createUrl('admin'); ?>">Admin</a>)<?php endif;?></span>
+</h1>
+
+<p>The Missouri Student Unions - Memorial Student Union and the MU Student Center - serve as community centers on
+    the
+    University of Missouri campus. They provide quality facilities, services and conveniences for all the students,
+    faculty, staff and guests of the University. As programming and event centers, the Missouri Student Unions are a
+    welcoming environment for meeting, socializing, learning and developing.</p>
+
+<p>The Missouri Student Unions enforces all M-Book policies as it relates to events and requests within the Missouri
+    Student Unions facilities.&#160; Further information about the M-Book can be found <a
+        href="http://conduct.missouri.edu/for-students/m-book/"
+        target="_blank">here</a>.</p>
 
 <?php
 echo CHtml::htmlButton('<i class="fa fa-search"></i>', array(
@@ -22,15 +34,14 @@ echo CHtml::htmlButton('<i class="fa fa-search"></i>', array(
 
 $this->widget('booster.widgets.TbSelect2', array(
     'name' => 'tag-search',
-    'htmlOptions' => array('style' => 'display: inline-block',),
     'asDropDownList' => false,
     'htmlOptions' => array(
         'class' => 'unit_select',
-        'style' => 'width: 96%;',
+        'style' => 'width: 96%; display: inline-block; position: relative; right: 2px;',
     ),
     'options' => array(
         'tags' => Tag::getSearchTags(),
-        'placeholder' => ' ',
+        'placeholder' => 'Search Tags',
         'allowClear' => true,
     ),
 
@@ -38,6 +49,8 @@ $this->widget('booster.widgets.TbSelect2', array(
 
 
 ?>
+
+<h2>Our Policy On...</h2>
 <div id="policies">
 <?php $this->renderPartial('_policies', array('categories'=>$categories), false, false); ?>
 </div>

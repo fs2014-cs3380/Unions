@@ -2,6 +2,11 @@
     max-width: 1168px;
 }
 
+thead th{
+    background: black !important;
+    color: white;
+}
+
 .navbar{
     border-radius: 0px;
 }
@@ -29,4 +34,13 @@
 
 #search_policies{
     background-color: #F1B82D;
+    border-radius: 4px 0px 0px 4px;
+}
+
+span.label-warning{
+    margin-right: 5px;
+}
+
+span.label-warning a{
+    color: #000000;
 }
