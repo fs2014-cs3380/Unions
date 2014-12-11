@@ -143,7 +143,7 @@ CREATE TABLE attraction (
 CREATE TABLE item_type (
   item_type_id   SERIAL PRIMARY KEY,
   name           VARCHAR(45) NOT NULL,
-  status	INTEGER DEFAULT 0, /* -1 = DECLINED, 0 = PENDING, 1 = APPROVED */
+  status	       VARCHAR(45) DEFAULT 'Pending', /* -1 = DECLINED, 0 = PENDING, 1 = APPROVED */
   create_time    TIMESTAMP,
   create_user_id INTEGER,
   update_time    TIMESTAMP,
@@ -160,7 +160,7 @@ CREATE TABLE item (
   found_user		VARCHAR(45) NOT NULL,
   found_date       DATE         NOT NULL,
   item_type_id     INTEGER      NOT NULL REFERENCES item_type,
-  status         INTEGER     NOT NULL DEFAULT 1 REFERENCES item_status, 
+  status         INTEGER     NOT NULL DEFAULT 1 REFERENCES item_status (item_status_id),
   create_time      TIMESTAMP,
   create_user_id   INTEGER,
   update_time      TIMESTAMP,

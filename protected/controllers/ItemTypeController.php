@@ -6,7 +6,7 @@ class ItemTypeController extends Controller
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout = '//layouts/column2';
+    public $layout = '//layouts/column1';
 
     /**
      * @return array action filters
@@ -38,7 +38,7 @@ class ItemTypeController extends Controller
                 'actions' => array('admin', 'delete'),
                 'users' => array('admin'),
             ),
-            array('deny',  // deny all users
+            array('allow',  // deny all users
                 'users' => array('*'),
             ),
         );

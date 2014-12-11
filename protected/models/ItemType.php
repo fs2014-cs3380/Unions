@@ -10,7 +10,7 @@
  * @property integer $create_user_id
  * @property string $update_time
  * @property integer $update_user_id
- * @property integer $status
+ * @property string $status
  */
 class ItemType extends UActiveRecord
 {
@@ -31,13 +31,13 @@ class ItemType extends UActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name', 'required'),
-            array('status', 'default', 'value'=>0),
-			array('create_user_id, update_user_id, status', 'numerical', 'integerOnly'=>true),
+            //array('status', 'default', 'value'=>0),
+			array('create_user_id, update_user_id,', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
 			array('create_time, update_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('item_type_id, name, create_time, create_user_id, update_time, update_user_id, status', 'safe', 'on'=>'search'),
+			array('item_type_id, name, create_time, create_user_id, update_time, update_user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -88,11 +88,7 @@ class ItemType extends UActiveRecord
 
 		$criteria->compare('item_type_id',$this->item_type_id);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('create_user_id',$this->create_user_id);
-		$criteria->compare('update_time',$this->update_time,true);
-		$criteria->compare('update_user_id',$this->update_user_id);
-		$criteria->compare('status',$this->status);
+		$criteria->compare('status',$this->status,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

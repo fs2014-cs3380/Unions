@@ -27,7 +27,7 @@ class ItemController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'admin'),
+                'actions' => array('index', 'view'),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -38,7 +38,7 @@ class ItemController extends Controller
                 'actions' => array('admin', 'delete'),
                 'users' => array('admin'),
             ),
-            array('deny',  // deny all users
+            array('allow',  // deny all users
                 'users' => array('*'),
             ),
         );
@@ -144,6 +144,17 @@ class ItemController extends Controller
         ));
     }
 
+    public function actionClaim(){
+        $model = new ItemClaim('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['ItemClaim']))
+            $model->attributes = $_GET['ItemClaim'];
+
+        $this->render('//itemClaim/admin', array(
+            'model' => $model,
+        ));
+    }
+
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
@@ -184,9 +195,11 @@ class ItemController extends Controller
                 'type' => 'navbar',
                 'htmlOptions' => array('class' =>'pull-right'),
                 'items' => array(
+                    array('label' => 'View All Items', 'url' => array('index'), 'visible' => Yii::app()->user->isGuest),
+                    array('label' => 'View All Items', 'url' => array('admin'), 'visible' => !Yii::app()->user->isGuest),
                     array('label' => 'Add Item', 'url' => array('create')),
-                    array('label' => 'Show Claimed Items', 'url' => array('claimed')),
-                    array('label' => 'Show Pending Items', 'url' => array('pending')),
+                    array('label' => 'Show Claimed Items', 'url' => array('claim'), 'visible' => !Yii::app()->user->isGuest),
+                    array('label' => 'Show Pending Items', 'url' => array('itemtype/admin'), 'visible' => !Yii::app()->user->isGuest),
 
                 )
             )

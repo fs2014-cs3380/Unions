@@ -4,11 +4,16 @@
  * This is the model class for table "unions.item_claim".
  *
  * The followings are the available columns in table 'unions.item_claim':
+ * @property integer $id
  * @property integer $item_id
- * @property integer $user_id
- * @property string $claim_time
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ *
+ * The followings are the available model relations:
+ * @property Item $item
  */
-class ItemClaim extends CActiveRecord
+class ItemClaim extends UActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -26,12 +31,12 @@ class ItemClaim extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('item_id, user_id', 'required'),
-			array('item_id, user_id', 'numerical', 'integerOnly'=>true),
-			array('claim_time', 'safe'),
+			array('item_id', 'required'),
+			array('item_id', 'numerical', 'integerOnly'=>true),
+			array('first_name, last_name, email', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('item_id, user_id, claim_time', 'safe', 'on'=>'search'),
+			array('id, item_id, first_name, last_name, email', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,6 +48,7 @@ class ItemClaim extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'item' => array(self::BELONGS_TO, 'Item', 'item_id'),
 		);
 	}
 
@@ -52,9 +58,11 @@ class ItemClaim extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'id' => 'ID',
 			'item_id' => 'Item',
-			'user_id' => 'User',
-			'claim_time' => 'Claim Time',
+			'first_name' => 'First Name',
+			'last_name' => 'Last Name',
+			'email' => 'Email',
 		);
 	}
 
@@ -76,9 +84,11 @@ class ItemClaim extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('id',$this->id);
 		$criteria->compare('item_id',$this->item_id);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('claim_time',$this->claim_time,true);
+		$criteria->compare('first_name',$this->first_name,true);
+		$criteria->compare('last_name',$this->last_name,true);
+		$criteria->compare('email',$this->email,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

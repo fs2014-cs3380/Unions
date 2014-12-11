@@ -15,4 +15,4 @@ $this->breadcrumbs=array(
 
 	<h1>Update Item <?php echo $model->item_id; ?></h1>
 
-<?php echo $this->renderPartial('_form',array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_updateItem',array('model'=>$model)); ?>
