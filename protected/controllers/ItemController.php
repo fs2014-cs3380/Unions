@@ -195,12 +195,11 @@ class ItemController extends Controller
                 'type' => 'navbar',
                 'htmlOptions' => array('class' =>'pull-right'),
                 'items' => array(
-                    array('label' => 'View All Items', 'url' => array('index'), 'visible' => Yii::app()->user->isGuest),
-                    array('label' => 'View All Items', 'url' => array('admin'), 'visible' => !Yii::app()->user->isGuest),
-                    array('label' => 'Add Item', 'url' => array('create')),
+                    array('label' => 'View All Items', 'url' => array('/lostandfound/index'), 'visible' => Yii::app()->user->isGuest),
+                    array('label' => 'View All Items', 'url' => array('/lostandfound/admin'), 'visible' => !Yii::app()->user->isGuest),
+                    array('label' => 'Add Item', 'url' => array('/lostandfound/create')),
                     array('label' => 'Show Claimed Items', 'url' => array('claim'), 'visible' => !Yii::app()->user->isGuest),
                     array('label' => 'Show Pending Items', 'url' => array('itemtype/admin'), 'visible' => !Yii::app()->user->isGuest),
-
                 )
             )
         );

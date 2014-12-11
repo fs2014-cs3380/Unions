@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property Item[] $items
  */
-class ItemStatus extends CActiveRecord
+class ItemStatus extends UActiveRecord
 {
 	/**
 	 * @return string the associated database table name

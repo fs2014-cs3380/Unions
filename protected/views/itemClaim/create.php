@@ -12,4 +12,4 @@ array('label'=>'Manage ItemClaim','url'=>array('admin')),
 
 <h1>Create ItemClaim</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_claimModal', array('model'=>$model)); ?>

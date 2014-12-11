@@ -168,4 +168,11 @@ class ItemClaimController extends Controller
             Yii::app()->end();
         }
     }
+
+    public function actionMarkClaimed(){
+        $model = new ItemClaim();
+        $model->item_id = $_POST['item_id'];
+
+        $this->renderPartial('/itemclaim/_markClaimed', array('model' => $model), false, true);
+    }
 }

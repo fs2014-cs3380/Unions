@@ -16,7 +16,7 @@
  * @property string $update_time
  * @property integer $update_user_id
  */
-class Item extends CActiveRecord
+class Item extends UActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -123,4 +123,14 @@ class Item extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    public function renderClaimBtn(){
+        echo CHtml::ajaxButton('Claim Item', Yii::app()->createUrl('itemclaim/markclaimed'), array(
+            'type' => 'POST',
+            'data' => array('item_id'=>$this->item_id),
+            'success' => 'function(data){
+        $("#claim_modal").html(data);
+
+}',
+        ), array('id' => 'MarkAsClaimedBtn', 'class' => 'btn btn-primary btn-xs', 'style'=>'color:black'));
+    }
 }

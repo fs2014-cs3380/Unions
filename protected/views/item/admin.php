@@ -1,3 +1,4 @@
+<div id="claim_modal"></div>
 <?php
 $this->breadcrumbs=array(
 	'Items'=>array('index'),
@@ -29,7 +30,6 @@ return false;
 'dataProvider'=>$model->search(),
 /*'filter'=>$model,*/
 'columns'=>array(
-		'item_id',
 		'location',
 		'description',
 		'found_user',
@@ -38,6 +38,12 @@ return false;
         array(
            'name'=>'status',
             'value'=>'$data->statuses->description',
+        ),
+        array(
+            'name'=>'data',
+            'header'=>false,
+            'value'=>'$data->renderClaimBtn()',
+            'type'=>'html'
         ),
 		/*
 		'status',
@@ -50,4 +56,5 @@ array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),
 ),
-)); ?>
+));
+?>
