@@ -525,11 +525,11 @@ VALUES
   (DEFAULT, 'Leadership Lounge 2nd Floor', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0),
   (DEFAULT, 'Traditions Lounge', 2, 20, 'image', '2004-10-19 10:23:54', 0, '2004-10-19 10:23:54', 0);
  
-INSERT INTO item_type VALUES (1, 'Cellphone', 'Pending');
-INSERT INTO item_type VALUES (2, 'Laptop', 'Pending');
-INSERT INTO item_type VALUES (3, 'Sunglasses', 'Pending');
-INSERT INTO item_type VALUES (5, 'Jacket', 'Pending');
-INSERT INTO item_type VALUES (4, 'Backpack', 'Pending');
+INSERT INTO item_type VALUES (1, 'Cellphone', 'Pending', null, 1);
+INSERT INTO item_type VALUES (2, 'Laptop', 'Pending', null, 1);
+INSERT INTO item_type VALUES (3, 'Sunglasses', 'Pending', null, 1);
+INSERT INTO item_type VALUES (5, 'Jacket', 'Pending', null, 1);
+INSERT INTO item_type VALUES (4, 'Backpack', 'Pending', null, 1);
 
 INSERT INTO item_status VALUES (1, 'Information Desk');
 INSERT INTO item_status VALUES (2, 'Claimed');

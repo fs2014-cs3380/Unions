@@ -168,4 +168,20 @@ class ItemTypeController extends Controller
             Yii::app()->end();
         }
     }
+
+    public function actionStatusUpdate()
+    {
+        if (isset($_POST['ItemType'])) {
+            $item_type = array('id' => $_POST['id'], 'status' => $_POST['ItemType']['status']);
+            $model = $this->loadModel($item_type['id']);
+            $model->status = $item_type['status'];
+
+            if ($model->save()) {
+                $model = new ItemType('search');
+                $model->unsetAttributes();  // clear any default values
+                $this->renderPartial('admin', array('model' => $model));
+            }
+
+        } else throw new CHttpExectption(400, 'invalid parameters recieved');
+    }
 }
