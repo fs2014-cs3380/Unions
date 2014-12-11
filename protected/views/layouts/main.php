@@ -30,6 +30,8 @@ $this->setNavbar();
 
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/unions.css"/>
 
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/yiiAjax.js"></script>
+
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
