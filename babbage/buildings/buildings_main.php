@@ -31,7 +31,7 @@ require $mainDir . "/includes/header.php";
 
 <?php
 require_once("../secure/database.php");
-$conn = pg_connect(HOST . " " . DBNAME . " " . USERNAME . " " . PASSWORD);
+$conn = pg_connect(CONNSTRING);
 pg_query("SET search_path=unions;");
 $str = '';
 
