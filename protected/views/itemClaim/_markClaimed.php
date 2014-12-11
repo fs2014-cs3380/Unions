@@ -34,6 +34,8 @@ $this->beginWidget(
 
     <?php echo $form->errorSummary($model); ?>
 
+    <?php echo $form->hiddenField($model, 'item_id'); ?>
+
     <?php echo $form->textFieldGroup($model,'first_name',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>100)))); ?>
 
     <?php echo $form->textFieldGroup($model,'last_name',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>100)))); ?>
@@ -46,30 +48,19 @@ $this->beginWidget(
             Yii::app()->createUrl('/lostandfound/claimItem'),
             array(
                 'type' => 'POST',
-                'beforeSend' => 'js:yiiFix.ajaxSubmit.beforeSend("#workExperienceForm")',
+                'beforeSend' => 'js:yiiFix.ajaxSubmit.beforeSend("#item-claim-form")',
                 'data' => 'js: $("#item-claim-form").serialize()',
-                'success' => 'function(experience){
-                             var data = {
-                                         id:"' . $model->primaryKey . '"
-                                         };
-                                    $.ajax({
-                                    url: "' . Yii::app()->createUrl("hr/profile/getStatusBarInfo") . '",
-                                    type: "POST",
-                                    data: data,
-                                    success: function(data){
-                                        updateStatusBar(data);
-                                    }
-                                });
-                        $("#experience-modal").modal("hide");
-                        $("#experience-modal").on("hidden.bs.modal", function (e){
-                            $("#experience-modal").remove();
-                            $(".experience_container").html(experience);
+                'success' => 'function(data){
+                            $("#claim_item_modal").modal("hide");
+                            $("#claim_item_modal").on("hidden.bs.modal", function (e){
+                            $("#claim_item_modal").remove();
+                            $("#main-content").html(data);
                         });
                     }'
             ),
             array(
                 'class' => 'btn btn-primary',
-                'id' => 'save_button-' . uniqid(),
+                'id' => 'claim_button-' . uniqid(),
             )
         ); ?>
     </div>

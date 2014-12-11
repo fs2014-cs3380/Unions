@@ -13,7 +13,7 @@
  * The followings are the available model relations:
  * @property Item $item
  */
-class ItemClaim extends UActiveRecord
+class ItemClaim extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -31,7 +31,8 @@ class ItemClaim extends UActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('item_id', 'required'),
+            array('first_name, last_name, email', 'required'),
+            array('email', 'email'),
 			array('item_id', 'numerical', 'integerOnly'=>true),
 			array('first_name, last_name, email', 'length', 'max'=>100),
 			// The following rule is used by search().

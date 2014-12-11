@@ -173,6 +173,6 @@ class ItemClaimController extends Controller
         $model = new ItemClaim();
         $model->item_id = $_POST['item_id'];
 
-        $this->renderPartial('/itemclaim/_markClaimed', array('model' => $model), false, true);
+        $this->renderPartial('_markClaimed', array('model' => $model), false, true);
     }
 }

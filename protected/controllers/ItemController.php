@@ -146,6 +146,7 @@ class ItemController extends Controller
 
     public function actionClaim(){
         $model = new ItemClaim('search');
+
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['ItemClaim']))
             $model->attributes = $_GET['ItemClaim'];
@@ -153,6 +154,24 @@ class ItemController extends Controller
         $this->render('//itemClaim/admin', array(
             'model' => $model,
         ));
+    }
+
+    public function actionClaimItem(){
+        if (isset($_POST['ItemClaim'])) {
+            $model = new ItemClaim();
+            $model->attributes = $_POST['ItemClaim'];
+            $item = Item::model()->findByPk($model->item_id);
+            $item->status = 2;
+            $item->save();
+
+            if(!$model->validate()){
+                throw new CHttpException(400);
+            } else {
+                $model->save();
+                $item = new Item('search');
+                $this->renderPartial('admin', array('model'=>$item), false, true);
+            }
+        }
     }
 
     /**

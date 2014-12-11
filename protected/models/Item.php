@@ -107,6 +107,7 @@ class Item extends UActiveRecord
 		$criteria->compare('found_date',$this->found_date,true);
 		$criteria->compare('item_type_id',$this->item_type_id);
 		$criteria->compare('status',$this->status);
+        $criteria->addCondition('status != 2');
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
