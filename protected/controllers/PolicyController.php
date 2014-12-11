@@ -126,21 +126,24 @@ class PolicyController extends Controller
         $this->layout='//layouts/column1';
 
         $tag = new Tag('search');
-
-        if(isset($_GET['Tag']))
-            $tag->attributes = $_GET['Tag'];
-
         $criteria=new CDbCriteria;
         $criteria->together = true;
         $criteria->with = array('policies', 'policies.tags', 'policies.tags.tag');
         $criteria->addCondition('policies.active = true');
-        $criteria->compare('LOWER(tag.tag)', strtolower("$tag->tag"), true);
 
-
-        $categories = Category::model()->findAll($criteria);
-        $this->render('index', array(
-            'categories' => $categories,
-        ));
+        if(isset($_POST['Tags'])) {
+            $tag->attributes = $_POST['Tags'];
+            $criteria->addCondition('LOWER(tag.tag) IN (\''.str_replace(',', '\', \'',strtolower($_POST['Tags'])).'\')');
+            $categories = Category::model()->findAll($criteria);
+            $this->renderPartial('_policies', array(
+                'categories' => $categories,
+            ));
+        } else {
+            $categories = Category::model()->findAll($criteria);
+            $this->render('index', array(
+                'categories' => $categories,
+            ));
+        }
     }
 
     /**
