@@ -7,7 +7,11 @@ $this->menu = array(
     array('label' => 'Create Policy', 'url' => array('create')),
     array('label' => 'Manage Policy', 'url' => array('admin')),
 );
+
+/* @todo Add select2 search filter */
 ?>
+
+
 
 <h1>Policies <span style="font-size: 10pt;">(<a href="<?php echo $this->createUrl('admin'); ?>">Admin</a>)</span></h1>
 <p>The Missouri Student Unions - Memorial Student Union and the MU Student Center - serve as community centers on the
@@ -24,7 +28,7 @@ $this->menu = array(
     $counter = 1;
     foreach ($categories as $category) {
         echo $counter == 1 ? '<div id="unions-policies" class="row">' : null;
-        echo '<div class="col-lg-4">';
+        echo '<div class="col-sm-4">';
         echo '<h3>'.$category->name.'</h3>';
         echo '<ul>';
             foreach($category->policies as $policy){
