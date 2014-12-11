@@ -101,4 +101,12 @@ class Tag extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public static function getSearchTags(){
+        $tags = array();
+        foreach(Tag::model()->findAll() as $tag){
+            $tags[] = $tag->tag;
+        }
+        return $tags;
+    }
 }

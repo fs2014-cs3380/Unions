@@ -32,6 +32,7 @@ return array(
 			'urlFormat'=>'path',
             'showScriptName'=>false,
 			'rules'=>array(
+                'policies/'=>'Policy/',
                 'lostandfound/'=>'Item/',
                 'lostandfound/<id:\d+>'=>'Item/view',
                 'lostandfound/<action:\w+>/<id:\d+>'=>'Item/<action>',

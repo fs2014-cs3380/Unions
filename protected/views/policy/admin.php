@@ -16,11 +16,11 @@ $this->widget(
         'tabs' => array(
             array(
                 'label' => 'Policies',
-                'content' => $this->renderPartial('_policies', array('policies'=> $policies), true),
+                'content' => $this->renderPartial('tabs/_policies', array('policies'=> $policies), true),
                 'active' => true
             ),
-            array('label' => 'Tags', 'content' => $this->renderPartial('_tags', array('tags'=> $tags), true)),
-            array('label' => 'Categories', 'content' => $this->renderPartial('_categories', array('categories'=> $categories), true)),
+            array('label' => 'Tags', 'content' => $this->renderPartial('tabs/_tags', array('tags'=> $tags), true)),
+            array('label' => 'Categories', 'content' => $this->renderPartial('tabs/_categories', array('categories'=> $categories), true)),
         ),
     )
 );

@@ -34,11 +34,11 @@ class Controller extends CController
                     array('label' => 'Reserve a Space', 'url' => Yii::app()->baseUrl . '/babbage/reservearoom/reservearoom.php'),
                     array('label' => 'Lost & Found', 'url' => Yii::app()->baseUrl . '/lostandfound/'),
                     array('label' => 'Policies', 'url' => '#', 'items' => array(
-                        array('label' => 'View All', 'url' => $this->createUrl('policies')),
+                        array('label' => 'View All', 'url' => $this->createUrl('/policies')),
                         array('label' => 'Admin', 'url' => $this->createUrl('policy/admin'), 'visible' => !Yii::app()->user->isGuest),
                         '--',
-                        array('label' => 'Presentation View', 'url' => Yii::app()->baseUrl . '/babbage/policies/'),
-                        array('label' => 'Presentation View', 'url' => Yii::app()->baseUrl . '/babbage/policies/admin/', 'visible' => !Yii::app()->user->isGuest)
+                        array('label' => 'Presentation - View', 'url' => Yii::app()->baseUrl . '/babbage/policies/'),
+                        array('label' => 'Presentation - Admin', 'url' => Yii::app()->baseUrl . '/babbage/policies/admin/', 'visible' => !Yii::app()->user->isGuest)
                     )),
                     array('label' => 'Portal', 'url' => '#', 'items' => array(
                         array('label' => 'Group Name Change', 'url' => $this->createUrl('groupNameChange/create')),
